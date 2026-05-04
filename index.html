@@ -3,1114 +3,1332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Automobile Recall Market Study — Interactive Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Automobile Recall Market Forecasting Strategy | BAC 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  :root {
-    --bg: #080c14;
-    --surface: #0e1520;
-    --surface2: #151d2e;
-    --border: #1e2d45;
-    --accent: #3b82f6;
-    --accent2: #0ea5e9;
-    --green: #22c55e;
-    --red: #ef4444;
-    --yellow: #f59e0b;
-    --slate: #94a3b8;
-    --text: #e2e8f0;
-    --text-muted: #64748b;
-    --glow: rgba(59,130,246,0.15);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+:root{
+  --navy-950:#070e18;
+  --navy-900:#0a1421;
+  --navy-800:#0d1b2a;
+  --navy-700:#132236;
+  --navy-600:#1c3050;
+  --navy-500:#2a4368;
+  --gold:#c9a84c;
+  --gold-light:#e8c97a;
+  --gold-pale:#f5e6b8;
+  --gold-soft:#fef9ec;
+  --red:#c0392b;
+  --red-bright:#e63946;
+  --green:#1a5c2a;
+  --green-bright:#22c55e;
+  --amber:#b8600a;
+  --cream:#fdf8ee;
+  --paper:#fbf6e9;
+  --white:#ffffff;
+  --text:#1a1410;
+  --text-muted:#6b5f4a;
+  --text-subtle:#9a8e78;
+  --border:#e8dec0;
+  --shadow:0 1px 3px rgba(13,27,42,0.06),0 1px 2px rgba(13,27,42,0.04);
+  --shadow-md:0 4px 16px rgba(13,27,42,0.08),0 2px 4px rgba(13,27,42,0.04);
+  --shadow-lg:0 12px 40px rgba(13,27,42,0.12),0 4px 12px rgba(13,27,42,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
-  /* HEADER */
-  header {
-    border-bottom: 1px solid var(--border);
-    padding: 20px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(8,12,20,0.95);
-    position: sticky; top: 0; z-index: 100;
-    backdrop-filter: blur(12px);
-  }
-  .logo-block { display:flex; align-items:center; gap:14px; }
-  .logo-icon {
-    width: 38px; height: 38px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 8px;
-    display: flex; align-items:center; justify-content:center;
-    font-size: 18px;
-  }
-  .logo-text { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; letter-spacing:-0.3px; }
-  .logo-sub { font-size:11px; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; margin-top:1px; }
-  .header-badges { display:flex; gap:8px; }
-  .badge {
-    padding: 4px 10px; border-radius:20px; font-size:11px; font-weight:600;
-    letter-spacing:0.5px; text-transform:uppercase;
-  }
-  .badge-blue { background:rgba(59,130,246,0.15); color:var(--accent2); border:1px solid rgba(59,130,246,0.3); }
-  .badge-green { background:rgba(34,197,94,0.12); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;background:var(--navy-900);color:var(--white);overflow:hidden;display:flex;align-items:center;}
+.hero-bg{position:absolute;inset:0;background-image:linear-gradient(135deg,rgba(7,14,24,0.82)0%,rgba(13,27,42,0.94)60%,rgba(13,27,42,0.98)100%),url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=2000&q=85&auto=format&fit=crop');background-size:cover;background-position:center;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.05)1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.05)1px,transparent 1px);background-size:80px 80px;pointer-events:none;}
+.hero-gold-bar{position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold)0%,var(--gold-light)50%,var(--gold)100%);z-index:5;}
+.hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:120px 48px 80px;width:100%;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:14px;padding:8px 16px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);border-radius:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-bottom:36px;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:700;line-height:1.04;letter-spacing:-0.02em;max-width:1100px;margin-bottom:28px;}
+.hero-title em{font-style:italic;font-weight:400;color:var(--gold-light);}
+.hero-sub{font-size:clamp(1rem,1.3vw,1.15rem);font-weight:300;color:rgba(255,255,255,0.75);max-width:700px;margin-bottom:48px;line-height:1.7;}
+.hero-stats-row{display:flex;gap:40px;flex-wrap:wrap;padding:28px 0;border-top:1px solid rgba(255,255,255,0.12);border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:40px;}
+.hero-stat .num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--gold-light);line-height:1;}
+.hero-stat .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:4px;}
+.hero-team{display:flex;flex-wrap:wrap;gap:32px 56px;}
+.team-block .label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.team-block .name{font-size:14px;color:rgba(255,255,255,0.92);line-height:1.5;}
+.hero-badge{position:absolute;top:48px;right:48px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;z-index:3;}
+.hero-badge-pill{background:var(--red);color:var(--white);padding:10px 20px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border-radius:4px;text-align:center;line-height:1.4;box-shadow:0 8px 24px rgba(192,57,43,0.4);}
+.hero-badge-uni{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--gold-light);margin-top:8px;}
 
-  /* NAV TABS */
-  nav {
-    display:flex; gap:0; padding: 0 32px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-  }
-  .tab {
-    padding: 14px 20px; font-size:13px; font-weight:500; cursor:pointer;
-    color: var(--text-muted); border-bottom: 2px solid transparent;
-    white-space:nowrap; transition: all 0.2s; letter-spacing:0.2px;
-  }
-  .tab:hover { color: var(--text); }
-  .tab.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+/* ── KPI STRIP ── */
+.kpi-strip{background:var(--navy-800);color:var(--white);padding:36px 48px;border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(201,168,76,0.2);}
+.kpi-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:32px;}
+.kpi-item{display:flex;flex-direction:column;gap:6px;position:relative;padding-left:20px;}
+.kpi-item::before{content:'';position:absolute;left:0;top:2px;bottom:2px;width:2px;background:var(--gold);}
+.kpi-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--gold-light);line-height:1;letter-spacing:-0.02em;}
+.kpi-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-top:4px;}
 
-  /* MAIN */
-  main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+/* ── NAV TABS ── */
+.nav-tabs{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--border);z-index:100;box-shadow:var(--shadow);}
+.nav-tabs-inner{max-width:1280px;margin:0 auto;padding:0 48px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.nav-tabs-inner::-webkit-scrollbar{display:none;}
+.nav-tab{background:none;border:none;cursor:pointer;padding:20px 22px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--text-muted);letter-spacing:0.02em;white-space:nowrap;position:relative;transition:color 0.2s ease;display:flex;align-items:center;gap:8px;}
+.nav-tab .num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-subtle);letter-spacing:0.1em;}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{color:var(--navy-800);font-weight:600;}
+.nav-tab.active .num{color:var(--gold);}
+.nav-tab.active::after{content:'';position:absolute;bottom:-1px;left:22px;right:22px;height:2px;background:var(--gold);}
 
-  /* PANELS */
-  .panel-grid { display:grid; gap:16px; }
-  .panel-grid-2 { grid-template-columns: repeat(2,1fr); }
-  .panel-grid-3 { grid-template-columns: repeat(3,1fr); }
-  .panel-grid-4 { grid-template-columns: repeat(4,1fr); }
-  .panel-grid-1-2 { grid-template-columns: 1fr 2fr; }
-  .panel-grid-2-1 { grid-template-columns: 2fr 1fr; }
+/* ── SECTIONS ── */
+.main{background:var(--cream);min-height:60vh;}
+.section{display:none;padding:80px 48px;max-width:1280px;margin:0 auto;animation:fadeIn 0.4s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-header{margin-bottom:52px;display:flex;align-items:flex-start;gap:32px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.sec-num{font-family:'Playfair Display',serif;font-size:4.5rem;font-weight:300;font-style:italic;color:var(--gold);line-height:0.9;flex-shrink:0;}
+.sec-meta{flex:1;padding-top:6px;}
+.sec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:8px;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;line-height:1.1;color:var(--navy-800);letter-spacing:-0.02em;margin-bottom:12px;}
+.sec-desc{font-size:1rem;color:var(--text-muted);max-width:780px;line-height:1.75;}
 
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .panel-title {
-    font-family:'Syne',sans-serif; font-size:13px; font-weight:700;
-    text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted);
-    margin-bottom:16px;
-  }
-  .panel-title span { color:var(--accent2); }
+/* ── SHARED COMPONENTS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:6px;box-shadow:var(--shadow);}
+.card-pad{padding:32px;}
+.card-header{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--navy-800);margin-bottom:6px;}
+.card-sub{font-size:0.85rem;color:var(--text-muted);margin-bottom:24px;font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;}
+.dark-card{background:var(--navy-800);color:var(--white);border-radius:6px;padding:28px;position:relative;overflow:hidden;}
+.dark-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gold);}
+.dark-card .label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;}
+.dark-card .stat{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:8px;}
+.dark-card .desc{font-size:0.9rem;color:rgba(255,255,255,0.72);line-height:1.6;}
+.gold-tag{display:inline-block;background:var(--gold-soft);border:1px solid var(--gold);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.grid-1-2{display:grid;grid-template-columns:1fr 2fr;gap:40px;}
+.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:start;}
+.grid-1-1-wide{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start;}
+.mt-24{margin-top:24px;}
+.mt-40{margin-top:40px;}
+.chart-wrap{position:relative;}
+.divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
 
-  /* KPI cards */
-  .kpi-val {
-    font-family:'Syne',sans-serif; font-size:36px; font-weight:800;
-    line-height:1; letter-spacing:-1px;
-  }
-  .kpi-label { font-size:12px; color:var(--text-muted); margin-top:6px; letter-spacing:0.3px; }
-  .kpi-green { color: var(--green); }
-  .kpi-red { color: var(--red); }
-  .kpi-blue { color: var(--accent2); }
-  .kpi-yellow { color: var(--yellow); }
+/* ── OVERVIEW ── */
+.intro-text p{font-size:1rem;color:var(--text);margin-bottom:18px;line-height:1.8;}
+.intro-text p:first-of-type{font-size:1.1rem;color:var(--navy-700);font-weight:400;}
+.intro-text strong{color:var(--navy-800);font-weight:600;}
+.q-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:32px;box-shadow:var(--shadow-md);position:sticky;top:100px;}
+.q-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.q-icon{width:30px;height:30px;border-radius:50%;background:var(--red);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;}
+.q-header h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--navy-800);}
+.q-list{list-style:none;}
+.q-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid rgba(232,222,192,0.5);font-size:0.92rem;color:var(--text);line-height:1.55;}
+.q-item:last-child{border-bottom:none;}
+.q-item .n{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--gold);flex-shrink:0;line-height:1;min-width:22px;}
+.pipeline-row{display:flex;align-items:stretch;gap:0;margin-top:32px;}
+.pipe-step{flex:1;padding:20px 18px;background:var(--white);border:1px solid var(--border);position:relative;transition:all 0.2s;}
+.pipe-step:hover{background:var(--gold-soft);}
+.pipe-step:first-child{border-radius:6px 0 0 6px;}
+.pipe-step:last-child{border-radius:0 6px 6px 0;}
+.pipe-step:not(:last-child){border-right:none;}
+.pipe-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:14px solid var(--gold);z-index:2;}
+.pipe-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:0.1em;margin-bottom:6px;}
+.pipe-title{font-size:12px;font-weight:600;color:var(--navy-800);margin-bottom:4px;}
+.pipe-desc{font-size:11px;color:var(--text-muted);line-height:1.5;}
 
-  /* SECTION */
-  .section { display:none; }
-  .section.active { display:block; }
+/* ── BREAKPOINT ── */
+.bp-band{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:32px;}
+.bp-era{flex:1;padding:24px 20px;position:relative;}
+.bp-era.pre{background:rgba(59,130,246,0.04);}
+.bp-era.post{background:rgba(201,168,76,0.05);}
+.bp-era.ev{background:rgba(239,68,68,0.04);}
+.bp-era-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:6px;}
+.bp-era-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--navy-800);margin-bottom:8px;}
+.bp-era-desc{font-size:12px;color:var(--text-muted);line-height:1.6;}
+.bp-stat-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;background:rgba(13,27,42,0.04);border-radius:4px;margin-top:12px;}
+.bp-stat-val{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--navy-800);}
+.bp-stat-lab{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);}
 
-  /* Charts */
-  .chart-area { position:relative; }
-  canvas { display:block; }
+/* ── FIRMS ── */
+.firm-row{display:flex;align-items:center;gap:0;background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px;transition:all 0.2s;box-shadow:var(--shadow);}
+.firm-row:hover{transform:translateX(3px);box-shadow:var(--shadow-md);}
+.firm-accent{width:5px;align-self:stretch;flex-shrink:0;}
+.firm-accent.pos{background:var(--green);}
+.firm-accent.neg{background:var(--red);}
+.firm-accent.neu{background:var(--text-subtle);}
+.firm-logo-cell{width:100px;padding:20px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--border);}
+.firm-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--navy-800);}
+.firm-info{flex:1;padding:16px 20px;}
+.firm-name{font-size:13px;color:var(--text-muted);margin-bottom:2px;}
+.firm-tag-row{display:flex;gap:6px;margin-top:6px;}
+.firm-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;}
+.firm-tag.pos{background:rgba(26,92,42,0.1);color:var(--green);}
+.firm-tag.neg{background:rgba(192,57,43,0.1);color:var(--red);}
+.firm-tag.neu{background:rgba(154,142,120,0.1);color:var(--text-subtle);}
+.era-cells{display:grid;grid-template-columns:repeat(3,110px);gap:0;border-left:1px solid var(--border);}
+.era-cell{padding:12px 16px;border-right:1px solid var(--border);text-align:center;}
+.era-cell:last-child{border-right:none;}
+.era-cell .era-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:4px;}
+.era-cell .era-val{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;}
+.era-cell .era-p{font-size:10px;color:var(--text-subtle);margin-top:2px;}
+.car-pos{color:var(--green);}
+.car-neg{color:var(--red);}
+.car-neu{color:var(--text-subtle);}
 
-  /* Firm cards */
-  .firm-card {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    cursor:pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .firm-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .firm-card.positive { border-left: 3px solid var(--green); }
-  .firm-card.negative { border-left: 3px solid var(--red); }
-  .firm-card.neutral { border-left: 3px solid var(--slate); }
-  .firm-ticker {
-    font-family:'DM Mono',monospace; font-size:20px; font-weight:500;
-    letter-spacing:-0.5px;
-  }
-  .firm-name { font-size:12px; color:var(--text-muted); margin-top:2px; }
-  .firm-sens {
-    font-size:10px; font-weight:600; text-transform:uppercase;
-    letter-spacing:1px; margin-top:10px;
-    padding: 3px 8px; border-radius:4px; display:inline-block;
-  }
-  .sens-pos { background:rgba(34,197,94,0.15); color:var(--green); }
-  .sens-neg { background:rgba(239,68,68,0.15); color:var(--red); }
-  .sens-neu { background:rgba(148,163,184,0.1); color:var(--slate); }
+/* ── SURPRISE ── */
+.surprise-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;}
+.sup-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:24px;box-shadow:var(--shadow);transition:all 0.2s;}
+.sup-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.sup-icon{font-size:24px;margin-bottom:10px;}
+.sup-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--navy-800);margin-bottom:4px;}
+.sup-n{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-subtle);letter-spacing:0.1em;margin-bottom:12px;}
+.sup-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.sup-split-item{padding:10px 8px;border-radius:4px;text-align:center;}
+.sup-split-item.neg{background:rgba(192,57,43,0.07);border:1px solid rgba(192,57,43,0.15);}
+.sup-split-item.pos{background:rgba(26,92,42,0.07);border:1px solid rgba(26,92,42,0.15);}
+.sup-val{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;}
+.sup-val.neg-c{color:var(--red);}
+.sup-val.pos-c{color:var(--green);}
+.sup-lbl{font-size:9px;color:var(--text-subtle);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
+.sup-signal{margin-top:12px;padding:8px 12px;border-radius:4px;font-size:11px;font-weight:600;}
+.sup-signal.long{background:rgba(26,92,42,0.1);color:var(--green);}
+.sup-signal.short{background:rgba(192,57,43,0.1);color:var(--red);}
+.sup-signal.mixed{background:rgba(184,96,10,0.1);color:var(--amber);}
+.interaction-table{width:100%;border-collapse:collapse;}
+.interaction-table th{text-align:left;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);background:var(--gold-soft);border-bottom:1px solid var(--border);}
+.interaction-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:0.92rem;}
+.interaction-table tr:last-child td{border-bottom:none;}
+.interaction-table .big{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;}
+.p-sig{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:10px;}
+.p-sig.sig{background:rgba(26,92,42,0.1);color:var(--green);}
+.p-sig.ns{background:rgba(154,142,120,0.1);color:var(--text-subtle);}
 
-  .era-bars { margin-top:14px; display:flex; flex-direction:column; gap:8px; }
-  .era-row { display:flex; align-items:center; gap:8px; }
-  .era-label { font-size:10px; color:var(--text-muted); width:64px; flex-shrink:0; }
-  .era-bar-wrap { flex:1; height:6px; background:var(--border); border-radius:3px; overflow:hidden; }
-  .era-bar { height:100%; border-radius:3px; transition: width 0.6s ease; }
-  .era-val { font-family:'DM Mono',monospace; font-size:10px; width:50px; text-align:right; }
-  .era-val.pos { color: var(--green); }
-  .era-val.neg { color: var(--red); }
+/* ── STRATEGY ── */
+.strat-hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;}
+.strat-box{border-radius:6px;padding:36px;position:relative;overflow:hidden;}
+.strat-box.short{background:var(--navy-800);border:2px solid rgba(192,57,43,0.4);}
+.strat-box.long{background:var(--navy-800);border:2px solid rgba(26,92,42,0.4);}
+.strat-type{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px;}
+.strat-type.short-c{color:#f87171;}
+.strat-type.long-c{color:#4ade80;}
+.strat-condition{font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:20px;}
+.strat-win{font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;line-height:1;letter-spacing:-0.03em;}
+.strat-win.short-c{color:#f87171;}
+.strat-win.long-c{color:#4ade80;}
+.strat-meta{font-size:12px;color:rgba(255,255,255,0.55);margin-top:8px;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;}
+.win-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:4px;margin:16px 0;overflow:hidden;}
+.win-fill{height:100%;border-radius:4px;}
+.strat-note{font-size:12px;color:rgba(255,255,255,0.65);line-height:1.7;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);}
+.strat-note strong{color:rgba(255,255,255,0.9);}
+.perf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.perf-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 22px;box-shadow:var(--shadow);}
+.perf-card .p-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:6px;}
+.perf-card .p-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;line-height:1;}
+.perf-card .p-desc{font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5;}
+.perf-card.highlight{background:var(--gold-soft);border-color:var(--gold);}
+.perf-card.highlight .p-val{color:var(--amber);}
+.oos-banner{background:linear-gradient(135deg,var(--navy-800),var(--navy-700));color:var(--white);border-radius:6px;padding:36px 40px;border:2px solid rgba(201,168,76,0.3);position:relative;overflow:hidden;margin-bottom:32px;}
+.oos-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));}
+.oos-banner .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.oos-banner h3{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold-light);margin-bottom:6px;}
+.oos-banner p{font-size:0.95rem;color:rgba(255,255,255,0.75);line-height:1.7;}
+.oos-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:24px;}
+.oos-stat .v{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--white);line-height:1;}
+.oos-stat .l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:4px;}
 
-  /* Surprise section */
-  .surprise-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-  .surprise-card {
-    border: 1px solid var(--border); border-radius:10px; padding:18px; text-align:center;
-  }
-  .surprise-icon { font-size:28px; margin-bottom:8px; }
-  .surprise-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; margin-bottom:4px; }
-  .surprise-n { font-size:11px; color:var(--text-muted); margin-bottom:14px; }
+/* ── METHODOLOGY ── */
+.method-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.meth-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:28px;position:relative;transition:all 0.25s;box-shadow:var(--shadow);}
+.meth-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--gold);}
+.meth-step-badge{position:absolute;top:24px;right:24px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;}
+.meth-card.s1 .meth-step-badge{background:var(--navy-800);color:var(--gold-light);}
+.meth-card.s2 .meth-step-badge{background:#1a5c2a;color:#fff;}
+.meth-card.s3 .meth-step-badge{background:var(--amber);color:#fff;}
+.meth-card.s4 .meth-step-badge{background:#7b1fa2;color:#fff;}
+.meth-card.s5 .meth-step-badge{background:var(--red);color:#fff;}
+.meth-card.s6 .meth-step-badge{background:#00695c;color:#fff;}
+.meth-icon{width:44px;height:44px;border-radius:8px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:20px;}
+.meth-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--navy-800);margin-bottom:8px;padding-right:44px;}
+.meth-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.65;margin-bottom:14px;}
+.meth-example{background:var(--gold-soft);border-left:3px solid var(--gold);padding:12px 14px;font-size:0.82rem;color:var(--navy-700);font-style:italic;line-height:1.55;border-radius:0 4px 4px 0;}
+.meth-example .ex-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber);font-style:normal;display:block;margin-bottom:3px;}
 
-  .car-split { display:flex; gap:4px; margin-top:8px; }
-  .car-split-item { flex:1; text-align:center; padding:8px 4px; border-radius:6px; }
-  .car-split-item.neg-bg { background:rgba(239,68,68,0.1); }
-  .car-split-item.pos-bg { background:rgba(34,197,94,0.1); }
-  .car-split-val { font-family:'DM Mono',monospace; font-size:15px; font-weight:500; }
-  .car-split-lab { font-size:9px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+/* ── APPENDIX ── */
+.app-section{margin-bottom:48px;}
+.app-section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--navy-800);margin-bottom:6px;padding-bottom:12px;border-bottom:2px solid var(--gold);}
+.app-section-sub{font-size:0.9rem;color:var(--text-muted);margin-bottom:24px;line-height:1.6;}
+.nlp-flow{display:flex;flex-direction:column;gap:0;}
+.nlp-step{display:flex;gap:24px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border);}
+.nlp-step:last-child{border-bottom:none;}
+.nlp-num{width:36px;height:36px;border-radius:50%;background:var(--navy-800);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.nlp-content{flex:1;}
+.nlp-title{font-size:14px;font-weight:600;color:var(--navy-800);margin-bottom:4px;}
+.nlp-desc{font-size:13px;color:var(--text-muted);line-height:1.65;}
+.nlp-code{background:var(--navy-900);color:#e2e8f0;padding:10px 14px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:8px;line-height:1.6;overflow-x:auto;}
+.nlp-code .kw{color:#e8c97a;}
+.nlp-code .str{color:#86efac;}
+.nlp-code .cm{color:#64748b;font-style:italic;}
+.sharpe-table{width:100%;border-collapse:collapse;}
+.sharpe-table th{background:var(--navy-800);color:var(--gold-light);padding:12px 16px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;}
+.sharpe-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:0.9rem;}
+.sharpe-table tr:last-child td{border-bottom:none;}
+.sharpe-table tr:nth-child(even){background:var(--gold-soft);}
+.sharpe-table .winner{font-weight:700;color:var(--green);}
+.sharpe-table .mono{font-family:'JetBrains Mono',monospace;}
+.classify-pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.classify-pill{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;}
+.pill-mech{background:#dcedc8;color:#1a5c2a;}
+.pill-tech{background:#fce8e6;color:#c0392b;}
+.pill-amb{background:var(--gold-soft);color:var(--amber);}
+.conf-meter{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:6px;}
+.conf-fill{height:100%;border-radius:4px;background:linear-gradient(to right,var(--navy-600),var(--gold));}
+.sev-table{width:100%;border-collapse:collapse;}
+.sev-table th{background:var(--gold-soft);color:var(--navy-800);padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.sev-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:0.88rem;}
+.sev-table tr:last-child td{border-bottom:none;}
+.sev-table tr:hover{background:var(--gold-soft);}
+.weight-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px;}
+.weight-fill{height:100%;background:var(--red);border-radius:3px;}
+.event-params{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.ep-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:18px 20px;box-shadow:var(--shadow);}
+.ep-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:6px;}
+.ep-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy-800);}
+.ep-desc{font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.5;}
+.limit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.limit-card{padding:16px;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text-muted);line-height:1.6;}
+.limit-card strong{color:var(--text);display:block;margin-bottom:4px;}
+.chart-container{position:relative;}
 
-  /* Strategy */
-  .strategy-box {
-    border: 1px solid var(--border); border-radius:10px; padding:22px;
-  }
-  .strategy-type {
-    font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
-    text-transform:uppercase; letter-spacing:2px; margin-bottom:10px;
-  }
-  .strategy-win {
-    font-family:'Syne',sans-serif; font-size:48px; font-weight:800; line-height:1;
-    letter-spacing:-2px;
-  }
-  .strategy-meta { font-size:12px; color:var(--text-muted); margin-top:8px; }
-  .win-bar-wrap { height:10px; background:var(--border); border-radius:5px; margin-top:14px; overflow:hidden; }
-  .win-bar { height:100%; border-radius:5px; }
+/* ── FOOTER ── */
+.footer{background:var(--navy-900);color:rgba(255,255,255,0.7);padding:60px 48px 40px;border-top:3px solid var(--gold);}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:14px;line-height:1.2;}
+.footer-title em{color:var(--gold-light);font-style:italic;}
+.footer-desc{font-size:0.88rem;line-height:1.7;color:rgba(255,255,255,0.6);}
+.footer-block .label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.footer-block p{font-size:0.85rem;color:rgba(255,255,255,0.65);line-height:1.8;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.1em;}
 
-  /* Timeline */
-  .timeline-wrap { position:relative; }
-
-  /* Methodology step */
-  .method-steps { display:flex; gap:0; align-items:stretch; }
-  .method-step {
-    flex:1; padding:16px; border:1px solid var(--border); border-radius:0;
-    position:relative; background:var(--surface2);
-  }
-  .method-step:first-child { border-radius:10px 0 0 10px; }
-  .method-step:last-child { border-radius:0 10px 10px 0; }
-  .method-step:not(:last-child) { border-right: none; }
-  .method-arrow {
-    position:absolute; right:-14px; top:50%; transform:translateY(-50%);
-    width:0; height:0;
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-left: 14px solid var(--accent2);
-    z-index:2;
-  }
-  .step-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--accent2); margin-bottom:6px; }
-  .step-title { font-size:13px; font-weight:600; margin-bottom:4px; }
-  .step-desc { font-size:11px; color:var(--text-muted); line-height:1.5; }
-
-  /* Divider */
-  .divider { border:none; border-top:1px solid var(--border); margin: 20px 0; }
-
-  /* Tooltip */
-  .tooltip-box {
-    position:fixed; background:var(--surface2); border:1px solid var(--border);
-    border-radius:8px; padding:10px 14px; font-size:12px; pointer-events:none;
-    z-index:1000; display:none; max-width:200px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  }
-
-  /* Mobile */
-  @media(max-width:768px){
-    main { padding:16px; }
-    .panel-grid-2,.panel-grid-3,.panel-grid-4,
-    .panel-grid-1-2,.panel-grid-2-1 { grid-template-columns:1fr; }
-    .surprise-grid { grid-template-columns:1fr; }
-    .method-steps { flex-direction:column; }
-    .method-step { border-radius:8px !important; border-right:1px solid var(--border) !important; }
-    .method-arrow { display:none; }
-    nav { padding:0 16px; }
-    header { padding:16px; }
-  }
-
-  .glow-line {
-    width:100%; height:1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    margin: 4px 0 20px;
-  }
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .kpi-inner{grid-template-columns:repeat(3,1fr);}
+  .grid-2-1,.grid-1-1-wide,.grid-1-2{grid-template-columns:1fr;}
+  .strat-hero,.surprise-cards{grid-template-columns:1fr;}
+  .era-cells{grid-template-columns:repeat(3,90px);}
+  .perf-grid{grid-template-columns:repeat(2,1fr);}
+  .oos-stats{grid-template-columns:repeat(2,1fr);}
+  .event-params{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .hero-content{padding:100px 24px 80px;}
+  .hero-badge{top:24px;right:24px;}
+  .hero-stats-row{gap:24px;}
+  .kpi-strip{padding:24px;}
+  .kpi-inner{grid-template-columns:repeat(2,1fr);}
+  .nav-tabs-inner{padding:0 16px;}
+  .section{padding:48px 20px;}
+  .sec-header{gap:16px;}
+  .sec-num{font-size:3rem;}
+  .grid-2,.grid-3,.grid-4,.method-grid,.limit-grid{grid-template-columns:1fr;}
+  .perf-grid,.oos-stats{grid-template-columns:1fr 1fr;}
+  .pipeline-row{flex-direction:column;}
+  .pipe-step:first-child,.pipe-step:last-child{border-radius:6px;}
+  .pipe-step{border-right:1px solid var(--border)!important;border-bottom:none;}
+  .pipe-arrow{display:none;}
+  .era-cells{display:none;}
+  .firm-row{flex-wrap:wrap;}
+  .event-params{grid-template-columns:1fr;}
+  .bp-band{flex-direction:column;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer{padding:40px 24px;}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-block">
-    <div class="logo-icon">📈</div>
-    <div>
-      <div class="logo-text">Recall Risk Analytics</div>
-      <div class="logo-sub">Manhattan University · Business Analytics Competition 2026</div>
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-gold-bar"></div>
+  <div class="hero-badge">
+    <div class="hero-badge-pill">Business Analytics<br>Competition 2026</div>
+    <div class="hero-badge-uni">St. John's University</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">NHTSA Recall Dataset · 2000–2025 · Breakpoint Event Study</div>
+    <h1 class="hero-title">Do Automobile Recalls <em>Move Stock Prices</em> — and When Do They Matter?</h1>
+    <p class="hero-sub">A breakpoint event study of 5,436 U.S. vehicle recalls examining how recall surprise, firm sensitivity, and market era interact to create exploitable trading signals in the days following an NHTSA filing.</p>
+    <div class="hero-stats-row">
+      <div class="hero-stat"><div class="num">5,436</div><div class="lbl">Recalls Analyzed</div></div>
+      <div class="hero-stat"><div class="num">+$5.93M</div><div class="lbl">Cumulative P&L (Backtest)</div></div>
+      <div class="hero-stat"><div class="num">0.839</div><div class="lbl">Strategy Sharpe Ratio</div></div>
+      <div class="hero-stat"><div class="num">72.2%</div><div class="lbl">Q1 2026 Win Rate</div></div>
+      <div class="hero-stat"><div class="num">54.2%</div><div class="lbl">Combined Win Rate</div></div>
+    </div>
+    <div class="hero-team">
+      <div class="team-block"><div class="label">Team</div><div class="name">Ryan Brid · Vincent D'Esposito<br>Augusta Domingo · Dylan Hahami</div></div>
+      <div class="team-block"><div class="label">Faculty Advisor</div><div class="name">Michael D. Herley, D.B.A.</div></div>
+      <div class="team-block"><div class="label">Affiliation</div><div class="name">Peter J. Tobin College of Business<br>St. John's University</div></div>
     </div>
   </div>
-  <div class="header-badges">
-    <span class="badge badge-blue">5,436 Recalls</span>
-    <span class="badge badge-green">2000–2025</span>
-  </div>
-</header>
+</section>
 
-<nav>
-  <div class="tab active" onclick="showTab('overview')">Overview</div>
-  <div class="tab" onclick="showTab('firms')">Firm Sensitivity</div>
-  <div class="tab" onclick="showTab('surprise')">Surprise Metric</div>
-  <div class="tab" onclick="showTab('strategy')">Trading Strategy</div>
-  <div class="tab" onclick="showTab('methodology')">Methodology</div>
+<!-- ═══ KPI STRIP ═══ -->
+<section class="kpi-strip">
+  <div class="kpi-inner">
+    <div class="kpi-item"><div class="kpi-num">29,663</div><div class="kpi-label">Raw NHTSA Records</div></div>
+    <div class="kpi-item"><div class="kpi-num">5,436</div><div class="kpi-label">Matched Observations</div></div>
+    <div class="kpi-item"><div class="kpi-num">453.06</div><div class="kpi-label">Bai-Perron F-stat 2014</div></div>
+    <div class="kpi-item"><div class="kpi-num">+5.4%</div><div class="kpi-label">Annualized Return</div></div>
+    <div class="kpi-item"><div class="kpi-num">0.839</div><div class="kpi-label">Sharpe vs 0.723 S&amp;P</div></div>
+  </div>
+</section>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="nav-tab active" data-tab="overview"><span class="num">01</span>Overview</button>
+    <button class="nav-tab" data-tab="breakpoint"><span class="num">02</span>Structural Shift</button>
+    <button class="nav-tab" data-tab="firms"><span class="num">03</span>Firm Sensitivity</button>
+    <button class="nav-tab" data-tab="surprise"><span class="num">04</span>Surprise Metric</button>
+    <button class="nav-tab" data-tab="strategy"><span class="num">05</span>Strategy &amp; Performance</button>
+    <button class="nav-tab" data-tab="appendix"><span class="num">A</span>Appendix</button>
+  </div>
 </nav>
 
-<main>
+<main class="main">
 
-<!-- ═══════════════ OVERVIEW ═══════════════ -->
-<section class="section active" id="tab-overview">
-  <div class="panel-grid panel-grid-4" style="margin-bottom:16px;">
-    <div class="panel">
-      <div class="panel-title">Total <span>Recalls</span></div>
-      <div class="kpi-val kpi-blue">5,436</div>
-      <div class="kpi-label">Cleaned from 29,663 raw records</div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">Breakpoint <span>2014</span></div>
-      <div class="kpi-val" style="color:#f59e0b;">453.06</div>
-      <div class="kpi-label">Bai-Perron F-stat · p &lt; 0.001</div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">Recall <span>Classification</span></div>
-      <div class="kpi-val" style="color:#a78bfa;">84.2%</div>
-      <div class="kpi-label">Mechanical · 13.8% Technical · 2% Ambiguous</div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">Top <span>Component</span></div>
-      <div class="kpi-val kpi-green">949</div>
-      <div class="kpi-label">Powertrain recalls (largest category)</div>
+<!-- ════════════════ 01 OVERVIEW ════════════════ -->
+<section class="section active" id="overview">
+  <div class="sec-header">
+    <div class="sec-num">01</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">The Research Question</div>
+      <h2 class="sec-title">Finding the Signal in Recall Risk</h2>
+      <p class="sec-desc">U.S. auto recalls have grown in frequency and regulatory scrutiny over 25 years, evolving from mechanical failures to complex software-driven events. Yet markets don't react to every recall equally — and identifying when they do creates a tradeable edge.</p>
     </div>
   </div>
 
-  <div class="panel-grid panel-grid-2-1" style="margin-bottom:16px;">
-    <div class="panel">
-      <div class="panel-title">Annual Recall Volume <span>2000–2025</span></div>
-      <div class="chart-area"><canvas id="yearChart" height="220"></canvas></div>
+  <div class="grid-2-1">
+    <div class="intro-text">
+      <p>The National Highway Traffic Safety Administration publicly records every U.S. vehicle recall. Each filing describes the defect, the consequence, the corrective action, and the population of vehicles at risk. Over 25 years, this database has grown into one of the most comprehensive records of automotive product risk available to investors.</p>
+      <p>Most analyses stop at recall volume. This study goes further — building a <strong>severity scoring model</strong> using keyword-based consequence matching, a <strong>mechanical vs. technical classifier</strong> powered by Claude Sonnet, and a <strong>surprise metric</strong> that measures how unexpected a recall is relative to a firm's own history. The result is a systematic framework for identifying which recalls actually move markets.</p>
+      <p>Using a Bai-Perron breakpoint test, we identify two structural regime shifts: <strong>2014</strong> (the Takata airbag crisis, triggering a wave of regulation) and <strong>2021</strong> (the onset of the EV/tech era). Market reactions to recalls differ dramatically across these three regimes — and so does the optimal trading strategy.</p>
+      <p>The central finding: <strong>the edge lies in how markets differentially reprice recall risk, not in the recall itself.</strong> Markets do not adjust immediately. The strongest signal appears only when recall surprise aligns with firm sensitivity — a combination that produces statistically significant abnormal returns in the [−1,+7] window post-announcement.</p>
+
+      <div class="pipeline-row mt-40">
+        <div class="pipe-step">
+          <div class="pipe-arrow"></div>
+          <div class="pipe-num">STEP 01</div>
+          <div class="pipe-title">Data Cleaning</div>
+          <div class="pipe-desc">29,663 raw → 6,600 cleaned → 5,436 with market data</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-arrow"></div>
+          <div class="pipe-num">STEP 02</div>
+          <div class="pipe-title">Text Analysis</div>
+          <div class="pipe-desc">Keyword matching for severity scoring + LLM classification for Mechanical vs. Technical</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-arrow"></div>
+          <div class="pipe-num">STEP 03</div>
+          <div class="pipe-title">Breakpoint Analysis</div>
+          <div class="pipe-desc">Bai-Perron test identifies 2014 &amp; 2021 regime breaks</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-arrow"></div>
+          <div class="pipe-num">STEP 04</div>
+          <div class="pipe-title">Event Study</div>
+          <div class="pipe-desc">Market model CAR over [−5,+5], [−1,+1], [0,+1]</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-num">STEP 05</div>
+          <div class="pipe-title">Investment Strategy</div>
+          <div class="pipe-desc">Surprise + sensitivity → SHORT/LONG signals [−1,+7]</div>
+        </div>
+      </div>
     </div>
-    <div class="panel">
-      <div class="panel-title">Component <span>Distribution</span></div>
-      <div class="chart-area"><canvas id="compChart" height="220"></canvas></div>
-    </div>
+
+    <aside>
+      <div class="q-card">
+        <div class="q-header"><div class="q-icon">?</div><h3>Research Questions</h3></div>
+        <ol class="q-list">
+          <li class="q-item"><span class="n">①</span><span>Do recalls cause measurable cumulative abnormal returns?</span></li>
+          <li class="q-item"><span class="n">②</span><span>Has the market's interpretation of recalls shifted over time?</span></li>
+          <li class="q-item"><span class="n">③</span><span>Which firms react positively vs. negatively to recall news?</span></li>
+          <li class="q-item"><span class="n">④</span><span>Does recall surprise predict the size of the market reaction?</span></li>
+          <li class="q-item"><span class="n">⑤</span><span>Can a systematic trading strategy exploit this mispricing?</span></li>
+        </ol>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div class="gold-tag" style="margin-bottom:10px;">Key Limitation</div>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Transaction fees, bid-ask spreads, and limited pre-announcement information are not captured in the backtest. Results represent gross performance before implementation costs.</p>
+        </div>
+      </div>
+      <div class="dark-card mt-24">
+        <div class="label">The Central Finding</div>
+        <div class="stat" style="font-size:1.6rem;margin-bottom:10px;">Signal in Alignment</div>
+        <div class="desc">The strongest abnormal return (+0.62%, p=0.0001) emerges only when a <em>shock event recall</em> hits a <em>negative-sensitive firm</em>. Neither condition alone produces the same effect.</div>
+      </div>
+    </aside>
   </div>
 
-  <div class="panel-grid panel-grid-2">
-    <div class="panel">
-      <div class="panel-title">CAR by <span>Severity Band</span></div>
-      <div class="chart-area"><canvas id="sevChart" height="180"></canvas></div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">Mechanical vs Tech <span>Share Over Time</span></div>
-      <div class="chart-area"><canvas id="techMechChart" height="180"></canvas></div>
+  <div class="mt-40">
+    <div class="card card-pad">
+      <div class="card-header">Recall Volume by Year &amp; Recall Class</div>
+      <div class="card-sub">2000–2025 · Mechanical vs. Technical shift over 25 years</div>
+      <div class="chart-container" style="height:280px;"><canvas id="overviewChart"></canvas></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ FIRMS ═══════════════ -->
-<section class="section" id="tab-firms">
-  <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
-    The <strong style="color:var(--text);">Firm Sensitivity Model</strong> classifies automakers by their market reaction to recall announcements. Signal interpretation varies dramatically by firm — some see recalls as proactive management (positive CAR), others face investor punishment (negative CAR).
-  </p>
+<!-- ════════════════ 02 BREAKPOINT ════════════════ -->
+<section class="section" id="breakpoint">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">Structural Regime Shifts</div>
+      <h2 class="sec-title">The Market Has Changed Three Times</h2>
+      <p class="sec-desc">A Bai-Perron structural break test applied to the recall time series identifies two statistically significant breakpoints — 2014 and 2021 — defining three distinct market regimes with fundamentally different investor behavior.</p>
+    </div>
+  </div>
 
-  <div class="panel-grid panel-grid-3" id="firmCards" style="margin-bottom:20px;"></div>
+  <div class="bp-band">
+    <div class="bp-era pre">
+      <div class="bp-era-label">Regime 1 · 2000–2013</div>
+      <div class="bp-era-title">Pre-2014: Mechanical Era</div>
+      <div class="bp-era-desc">Recalls predominantly mechanical. Lower regulatory scrutiny. Market reacts modestly; recalls often seen as isolated quality issues rather than systemic signals.</div>
+      <div class="bp-stat-box">
+        <div><div class="bp-stat-val">84.2%</div><div class="bp-stat-lab">Mechanical</div></div>
+        <div><div class="bp-stat-val">~0.0%</div><div class="bp-stat-lab">Avg CAR</div></div>
+      </div>
+    </div>
+    <div class="bp-era post">
+      <div class="bp-era-label">Regime 2 · 2014–2020 · F-Stat 453.06***</div>
+      <div class="bp-era-title">Post-2014: Regulatory Awakening</div>
+      <div class="bp-era-desc">Takata airbag crisis triggers sweeping NHTSA reforms. Investors begin penalizing some firms (Hyundai, BMW, Honda) while others (Tesla) see positive reactions reflecting "proactive management" framing.</div>
+      <div class="bp-stat-box">
+        <div><div class="bp-stat-val">453.06</div><div class="bp-stat-lab">F-Stat</div></div>
+        <div><div class="bp-stat-val">p&lt;0.001</div><div class="bp-stat-lab">Significance</div></div>
+      </div>
+    </div>
+    <div class="bp-era ev">
+      <div class="bp-era-label">Regime 3 · 2021–2025 · F-Stat 162.8***</div>
+      <div class="bp-era-title">Tech/EV Era: Software-Defined Risk</div>
+      <div class="bp-era-desc">Tech-driven recalls quadruple in share. OTA software updates, autopilot/ADAS defects, and EV battery issues introduce new signal dynamics. Complexity increases perceived risk for some makers, rewards others.</div>
+      <div class="bp-stat-box">
+        <div><div class="bp-stat-val">162.8</div><div class="bp-stat-lab">F-Stat</div></div>
+        <div><div class="bp-stat-val">22.4%</div><div class="bp-stat-lab">Tech Share</div></div>
+      </div>
+    </div>
+  </div>
 
-  <div class="panel">
-    <div class="panel-title">CAR Comparison Across <span>Market Eras</span></div>
-    <canvas id="firmEraChart" height="220"></canvas>
+  <div class="grid-2">
+    <div class="card card-pad">
+      <div class="card-header">Annual Recall Volume</div>
+      <div class="card-sub">With Bai-Perron breakpoints annotated</div>
+      <div class="chart-container" style="height:260px;"><canvas id="bpChart"></canvas></div>
+    </div>
+    <div class="card card-pad">
+      <div class="card-header">Mechanical vs. Technical Share</div>
+      <div class="card-sub">The fourfold shift in tech-driven recalls 2000–2025</div>
+      <div class="chart-container" style="height:260px;"><canvas id="tmChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-3 mt-24">
+    <div class="card card-pad">
+      <div class="card-header">Top 3 Components</div>
+      <div class="card-sub">By total recall count across full dataset</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;font-weight:600;">⚙️ Powertrain</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;">1,500</span></div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--navy-600);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;font-weight:600;">🛡️ Safety Systems</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;">1,040</span></div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:69%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;font-weight:600;">🔋 Battery / EV</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;">300</span></div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:20%;height:100%;background:var(--red);border-radius:3px;"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-pad">
+      <div class="card-header">Recall Classification</div>
+      <div class="card-sub">Post-2014 dataset · LLM-classified</div>
+      <div class="chart-container" style="height:160px;"><canvas id="classChart"></canvas></div>
+    </div>
+    <div class="dark-card" style="display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div class="label">Why This Matters</div>
+        <p style="font-size:0.92rem;color:rgba(255,255,255,0.75);line-height:1.7;margin-top:8px;">Tech recalls signal product complexity and system-level risk — but also <em>active management</em> when firms use OTA updates. The same recall type produces opposite market reactions depending on the firm.</p>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.12);">
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold-light);">4×</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:4px;">Increase in tech recall share over 25 years</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════ SURPRISE ═══════════════ -->
-<section class="section" id="tab-surprise">
-  <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
-    The <strong style="color:var(--text);">Surprise Score</strong> = Actual Risk − Expected Risk. It measures how unexpected a recall is relative to a firm's historical recall history. The strongest market signal emerges when <em>shock</em> combines with <em>negative firm sensitivity</em>.
-  </p>
-
-  <div class="surprise-grid" style="margin-bottom:20px;">
-    <div class="surprise-card">
-      <div class="surprise-icon">✅</div>
-      <div class="surprise-title">Expected Recall</div>
-      <div class="surprise-n">n = 1,831 recalls · Bottom tercile</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">Low surprise → priced in</div>
-      <div class="car-split">
-        <div class="car-split-item neg-bg">
-          <div class="car-split-val" style="color:var(--red);">−0.20%</div>
-          <div class="car-split-lab">Neg-Sensitive</div>
-        </div>
-        <div class="car-split-item pos-bg">
-          <div class="car-split-val" style="color:var(--green);">+0.47%</div>
-          <div class="car-split-lab">Pos-Sensitive</div>
-        </div>
-      </div>
-      <div style="margin-top:12px;font-size:10px;background:rgba(34,197,94,0.1);color:var(--green);padding:6px 10px;border-radius:6px;">
-        🔼 LONG signal · p = 0.024
-      </div>
-    </div>
-
-    <div class="surprise-card">
-      <div class="surprise-icon">⚠️</div>
-      <div class="surprise-title">Moderate Surprise</div>
-      <div class="surprise-n">n = 1,831 recalls · Middle tercile</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">Mixed signal — context dependent</div>
-      <div class="car-split">
-        <div class="car-split-item neg-bg">
-          <div class="car-split-val" style="color:var(--red);">−0.62%</div>
-          <div class="car-split-lab">Neg-Sensitive</div>
-        </div>
-        <div class="car-split-item pos-bg">
-          <div class="car-split-val" style="color:var(--green);">+0.65%</div>
-          <div class="car-split-lab">Pos-Sensitive</div>
-        </div>
-      </div>
-      <div style="margin-top:12px;font-size:10px;background:rgba(245,158,11,0.1);color:var(--yellow);padding:6px 10px;border-radius:6px;">
-        ⚡ Interaction effect dominant
-      </div>
-    </div>
-
-    <div class="surprise-card">
-      <div class="surprise-icon">🚨</div>
-      <div class="surprise-title">Shock Event</div>
-      <div class="surprise-n">n = 1,831 recalls · Top tercile</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">High surprise → delayed underreaction</div>
-      <div class="car-split">
-        <div class="car-split-item neg-bg">
-          <div class="car-split-val" style="color:var(--red);">−0.62%</div>
-          <div class="car-split-lab">Neg-Sensitive</div>
-        </div>
-        <div class="car-split-item pos-bg">
-          <div class="car-split-val" style="color:var(--green);">+0.51%</div>
-          <div class="car-split-lab">Pos-Sensitive</div>
-        </div>
-      </div>
-      <div style="margin-top:12px;font-size:10px;background:rgba(239,68,68,0.1);color:var(--red);padding:6px 10px;border-radius:6px;">
-        🔽 SHORT signal · p = 0.0001
-      </div>
+<!-- ════════════════ 03 FIRMS ════════════════ -->
+<section class="section" id="firms">
+  <div class="sec-header">
+    <div class="sec-num">03</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">The Monaco Method</div>
+      <h2 class="sec-title">Firm Sensitivity Model</h2>
+      <p class="sec-desc">Not all firms react to recalls the same way. The Firm Sensitivity Model classifies manufacturers into three signal types — based on whether their average CAR is significantly positive, negative, or neutral — across three market eras.</p>
     </div>
   </div>
 
-  <div class="panel">
-    <div class="panel-title">Interaction Effect in <span>CAR%(t+1)</span></div>
-    <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Strongest signal only when surprise is combined with firm sensitivity — confirming delayed market underreaction.</p>
-    <canvas id="interactionChart" height="200"></canvas>
+  <div class="grid-3" style="margin-bottom:32px;">
+    <div class="card card-pad" style="border-top:3px solid var(--green);">
+      <div class="gold-tag" style="background:rgba(26,92,42,0.08);border-color:var(--green);color:var(--green);margin-bottom:10px;">Positive Signal</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--navy-800);margin-bottom:8px;">Views recalls as proactive management</div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.65;">Risk decreases → confidence premiums. Market interprets recall announcements as evidence the firm monitors quality actively.</p>
+    </div>
+    <div class="card card-pad" style="border-top:3px solid var(--red);">
+      <div class="gold-tag" style="background:rgba(192,57,43,0.08);border-color:var(--red);color:var(--red);margin-bottom:10px;">Negative Signal</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--navy-800);margin-bottom:8px;">Raises quality &amp; cost concerns</div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.65;">Risk increases → negative returns. Recalls signal operational problems or regulatory liability that investors price in immediately.</p>
+    </div>
+    <div class="card card-pad" style="border-top:3px solid var(--text-subtle);">
+      <div class="gold-tag" style="margin-bottom:10px;">Risk Priced In</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--navy-800);margin-bottom:8px;">No new information to the market</div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.65;">No reaction. Recall risk is already embedded in the stock price — announcements carry no incremental information.</p>
+    </div>
+  </div>
+
+  <!-- FIRM ROWS -->
+  <div id="firmList"></div>
+
+  <div class="card card-pad mt-24">
+    <div class="card-header">CAR by Firm Across Market Eras</div>
+    <div class="card-sub">Pre-2014 / Post-2014 / Tech/EV Era (2021+) — significant results highlighted</div>
+    <div class="chart-container" style="height:320px;"><canvas id="firmChart"></canvas></div>
   </div>
 </section>
 
-<!-- ═══════════════ STRATEGY ═══════════════ -->
-<section class="section" id="tab-strategy">
-  <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
-    The trading strategy exploits <strong style="color:var(--text);">delayed market repricing</strong> of recall risk. Markets do not fully adjust immediately — creating exploitable windows in the [−1, +7] day window.
-  </p>
+<!-- ════════════════ 04 SURPRISE ════════════════ -->
+<section class="section" id="surprise">
+  <div class="sec-header">
+    <div class="sec-num">04</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">The Surprise Metric</div>
+      <h2 class="sec-title">Signal vs. Noise</h2>
+      <p class="sec-desc">Surprise Score = Actual Risk − Expected Risk. Built from each firm's historical recall history, severity, and affected vehicles — it measures how unexpected a recall is relative to a firm's own baseline.</p>
+    </div>
+  </div>
 
-  <div class="panel-grid panel-grid-2" style="margin-bottom:16px;">
-    <div class="strategy-box" style="border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.04);">
-      <div class="strategy-type" style="color:var(--red);">📉 SHORT Strategy</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Shock Event + Negative-Sensitive Firm</div>
-      <div class="strategy-win" style="color:var(--red);">58.5%</div>
-      <div class="strategy-meta">Win Rate · 405 Trades · p = 0.0018***</div>
-      <div class="win-bar-wrap" style="margin-top:16px;">
-        <div class="win-bar" style="width:58.5%;background:var(--red);"></div>
+  <div class="card card-pad" style="margin-bottom:24px;background:var(--gold-soft);border-color:var(--gold);">
+    <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div class="gold-tag" style="margin-bottom:10px;">Formula</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy-800);">Surprise = Actual Risk − Expected Risk</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.65;">Where <strong>Actual Risk</strong> = Severity Score × log(Affected Vehicles), and <strong>Expected Risk</strong> is derived from the firm's trailing 365-day recall history.</div>
       </div>
-      <hr class="divider">
-      <p style="font-size:12px;color:var(--text-muted);line-height:1.7;">
-        Under semi-strong market efficiency, recall news should be priced in immediately. The gradual decline suggests <strong style="color:var(--text);">delayed underreaction</strong> — investors slowly incorporate expanding risk. Enter short as prices drift lower over [−1,+7].
-      </p>
-    </div>
-
-    <div class="strategy-box" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.04);">
-      <div class="strategy-type" style="color:var(--green);">📈 LONG Strategy</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Expected Recall + Positive-Resilient Firm</div>
-      <div class="strategy-win" style="color:var(--green);">55.8%</div>
-      <div class="strategy-meta">Win Rate · 385 Trades · p = 0.0156</div>
-      <div class="win-bar-wrap" style="margin-top:16px;">
-        <div class="win-bar" style="width:55.8%;background:var(--green);"></div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;">
+        <div style="text-align:center;padding:16px;background:var(--white);border:1px solid var(--border);border-radius:6px;min-width:110px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--navy-800);">1,831</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-top:4px;">Per tercile</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:var(--white);border:1px solid var(--border);border-radius:6px;min-width:110px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--navy-800);">33.3%</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-top:4px;">Each group</div>
+        </div>
       </div>
-      <hr class="divider">
-      <p style="font-size:12px;color:var(--text-muted);line-height:1.7;">
-        Market efficiency predicts immediate price adjustment, but the quick rebound indicates <strong style="color:var(--text);">initial overreaction followed by correction</strong>. Investors reassess the recall as low-impact — a short-term opportunity to go long as prices recover.
-      </p>
     </div>
   </div>
 
-  <div class="panel">
-    <div class="panel-title">Cumulative Abnormal Return <span>Path [−1, +7]</span></div>
-    <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Stylized CAR trajectories post-announcement. Short: gradual drift down. Long: overreaction then rebound.</p>
-    <canvas id="carPathChart" height="220"></canvas>
-  </div>
-</section>
-
-<!-- ═══════════════ METHODOLOGY ═══════════════ -->
-<section class="section" id="tab-methodology">
-  <div class="method-steps" style="margin-bottom:20px;">
-    <div class="method-step">
-      <div class="method-arrow"></div>
-      <div class="step-num">01</div>
-      <div class="step-title">Data Cleaning</div>
-      <div class="step-desc">29,663 raw NHTSA records → 6,600 cleaned → 5,436 with financial data merged</div>
+  <div class="surprise-cards">
+    <div class="sup-card">
+      <div class="sup-icon">✅</div>
+      <div class="sup-title">Expected Recall</div>
+      <div class="sup-n">n = 1,831 · Bottom tercile · Low surprise</div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Already priced in. Market identifies this as a routine filing consistent with firm history. Low surprise → no incremental negative signal.</p>
+      <div class="sup-split">
+        <div class="sup-split-item neg"><div class="sup-val neg-c">−0.20%</div><div class="sup-lbl">Neg-Sensitive</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-subtle);margin-top:2px;">p &gt; 0.05</div></div>
+        <div class="sup-split-item pos"><div class="sup-val pos-c">+0.47%</div><div class="sup-lbl">Pos-Sensitive</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);margin-top:2px;">p = 0.024</div></div>
+      </div>
+      <div class="sup-signal long">🔼 LONG Signal · p = 0.024</div>
     </div>
-    <div class="method-step">
-      <div class="method-arrow"></div>
-      <div class="step-num">02</div>
-      <div class="step-title">Text Analysis</div>
-      <div class="step-desc">NLP preprocessing — lowercase, strip punctuation, combine recall + consequence text</div>
+    <div class="sup-card">
+      <div class="sup-icon">⚠️</div>
+      <div class="sup-title">Moderate Surprise</div>
+      <div class="sup-n">n = 1,831 · Middle tercile</div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Mixed signal. Context-dependent. The interaction between surprise and firm sensitivity is dominant here — neither factor alone is reliable.</p>
+      <div class="sup-split">
+        <div class="sup-split-item neg"><div class="sup-val neg-c">−0.62%</div><div class="sup-lbl">Neg-Sensitive</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--red);margin-top:2px;">p = 0.0001</div></div>
+        <div class="sup-split-item pos"><div class="sup-val pos-c">+0.65%</div><div class="sup-lbl">Pos-Sensitive</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-subtle);margin-top:2px;">p &gt; 0.05</div></div>
+      </div>
+      <div class="sup-signal mixed">⚡ Interaction effect dominant</div>
     </div>
-    <div class="method-step">
-      <div class="method-arrow"></div>
-      <div class="step-num">03</div>
-      <div class="step-title">LLM Classification</div>
-      <div class="step-desc">Claude Sonnet classifies each recall: Mechanical vs Technical + confidence score + rationale</div>
-    </div>
-    <div class="method-step">
-      <div class="method-arrow"></div>
-      <div class="step-num">04</div>
-      <div class="step-title">Breakpoint Analysis</div>
-      <div class="step-desc">Bai-Perron test identifies structural breaks: 2014 (F=453, p&lt;0.001) and 2021 (F=162.8)</div>
-    </div>
-    <div class="method-step">
-      <div class="method-arrow"></div>
-      <div class="step-num">05</div>
-      <div class="step-title">Event Study</div>
-      <div class="step-desc">Market model estimation: alpha, beta per firm. CAR computed over [−5,+5], [−1,+1], [0,+1]</div>
-    </div>
-    <div class="method-step">
-      <div class="step-num">06</div>
-      <div class="step-title">Investment Strategy</div>
-      <div class="step-desc">Surprise metric + firm sensitivity → SHORT/LONG signals tested over [−1,+7] window</div>
+    <div class="sup-card">
+      <div class="sup-icon">🚨</div>
+      <div class="sup-title">Shock Event</div>
+      <div class="sup-n">n = 1,831 · Top tercile · High surprise</div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Delayed underreaction. Investors slowly incorporate expanding risk over [−1,+7]. The combined signal with firm sensitivity reaches +0.62% CAR.</p>
+      <div class="sup-split">
+        <div class="sup-split-item neg"><div class="sup-val neg-c">−0.62%</div><div class="sup-lbl">Neg-Sensitive</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--red);margin-top:2px;">p = 0.0001</div></div>
+        <div class="sup-split-item pos"><div class="sup-val pos-c">+0.51%</div><div class="sup-lbl">Pos-Sensitive</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);margin-top:2px;">p = 0.03</div></div>
+      </div>
+      <div class="sup-signal short">🔽 SHORT Signal · p = 0.0001</div>
     </div>
   </div>
 
-  <div class="panel-grid panel-grid-2" style="margin-bottom:16px;">
-    <div class="panel">
-      <div class="panel-title">Severity <span>Scoring Model</span></div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px;">
-        <thead>
-          <tr style="color:var(--text-muted);">
-            <th style="text-align:left;padding:6px 0;border-bottom:1px solid var(--border);">Tier</th>
-            <th style="text-align:right;padding:6px 0;border-bottom:1px solid var(--border);">Weight</th>
-            <th style="text-align:right;padding:6px 0;border-bottom:1px solid var(--border);">Justification</th>
+  <div class="grid-1-1-wide">
+    <div class="card card-pad">
+      <div class="card-header">Interaction Effect in CAR%(t+1)</div>
+      <div class="card-sub">The strongest signal only emerges when surprise aligns with firm sensitivity</div>
+      <table class="interaction-table">
+        <thead><tr><th>Firm Type</th><th>Expected Recall</th><th>Moderate Surprise</th><th>Shock Event</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Negative-Sensitive</strong></td>
+            <td><span class="big car-neg">−0.20%</span><br><span class="p-sig ns">p &gt; 0.05</span></td>
+            <td><span class="big car-neg">−0.62%</span><br><span class="p-sig sig">p = 0.0001</span></td>
+            <td><span class="big car-neg">−0.62%</span><br><span class="p-sig sig">p = 0.0001</span></td>
           </tr>
-        </thead>
-        <tbody id="sevTable"></tbody>
+          <tr>
+            <td><strong>Positive-Sensitive</strong></td>
+            <td><span class="big car-pos">+0.47%</span><br><span class="p-sig sig">p = 0.024</span></td>
+            <td><span class="big car-pos">+0.65%</span><br><span class="p-sig ns">p &gt; 0.05</span></td>
+            <td><span class="big car-pos">+0.51%</span><br><span class="p-sig sig">p = 0.03</span></td>
+          </tr>
+          <tr>
+            <td><strong>Combined (Shock+Neg)</strong></td>
+            <td><span class="big car-neu">—</span></td>
+            <td><span class="big car-pos">+0.26%</span><br><span class="p-sig sig">p = 0.03</span></td>
+            <td><span class="big car-pos">+0.62%</span><br><span class="p-sig sig">p = 0.0001</span></td>
+          </tr>
+        </tbody>
       </table>
+      <div style="margin-top:16px;padding:14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;">
+        <p style="font-size:12px;color:var(--navy-700);line-height:1.65;font-style:italic;">"The strongest signal emerges only when event shock is combined with firm sensitivity. Neither condition alone produces the same magnitude or significance."</p>
+      </div>
     </div>
-    <div class="panel">
-      <div class="panel-title">Bai-Perron <span>Breakpoints</span></div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:14px;background:rgba(59,130,246,0.05);">
-          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);">BREAKPOINT 2014</div>
-          <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent2);">453.06</div>
-          <div style="font-size:11px;color:var(--text-muted);">F-Stat · p &lt; 0.001 · Takata airbag crisis era</div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="dark-card">
+        <div class="label">Shock + Neg-Sensitive</div>
+        <div class="stat">−0.68%</div>
+        <div class="desc">Mean CAR decrease over [−1,+7] window. T-stat: −3.141 · p = 0.0018 ✦✦✦</div>
+      </div>
+      <div class="dark-card" style="border-left-color:var(--green-bright);">
+        <div class="label">Expected + Pos-Sensitive</div>
+        <div class="stat" style="color:#4ade80;">+0.75%</div>
+        <div class="desc">Mean CAR increase over [−1,+7] window. T-stat: 2.428 · p = 0.0156 ✦</div>
+      </div>
+      <div class="card card-pad">
+        <div class="card-header">Why Delayed?</div>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.7;">Under semi-strong market efficiency, recall news should price in immediately. The gradual drift suggests <strong>delayed underreaction</strong> — investors slowly incorporate expanding risk. This inefficiency is the tradeable edge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ 05 STRATEGY ════════════════ -->
+<section class="section" id="strategy">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">From Signal to P&amp;L</div>
+      <h2 class="sec-title">Strategy &amp; Performance</h2>
+      <p class="sec-desc">The trading strategy exploits delayed market repricing of recall risk. Two entry conditions — SHORT on shock events at negative-sensitive firms, LONG on expected recalls at positive-resilient firms — generate statistically significant win rates across 790 backtested trades.</p>
+    </div>
+  </div>
+
+  <div class="strat-hero">
+    <div class="strat-box short">
+      <div class="strat-type short-c">📉 SHORT Strategy</div>
+      <div class="strat-condition">Shock Event + Negative-Sensitive Firm · Window [−1,+7]</div>
+      <div class="strat-win short-c">58.5%</div>
+      <div class="strat-meta">Win Rate · 405 Trades · p = 0.0018 ✦✦✦ · T-stat: −3.141</div>
+      <div class="win-bar"><div class="win-fill" style="width:58.5%;background:#f87171;"></div></div>
+      <div class="strat-note">Market prices the recall gradually over [−1,+7] as investors slowly incorporate expanding risk. The <strong>gradual decline</strong> creates an opportunity to enter short at announcement and cover as prices stabilize.</div>
+    </div>
+    <div class="strat-box long">
+      <div class="strat-type long-c">📈 LONG Strategy</div>
+      <div class="strat-condition">Expected Recall + Positive-Resilient Firm · Window [−1,+7]</div>
+      <div class="strat-win long-c">55.8%</div>
+      <div class="strat-meta">Win Rate · 385 Trades · p = 0.0156 ✦ · T-stat: 2.428</div>
+      <div class="win-bar"><div class="win-fill" style="width:55.8%;background:#4ade80;"></div></div>
+      <div class="strat-note">Market <strong>overreacts</strong> initially, then reassesses the recall as low-impact. The quick rebound creates a short-term long opportunity. Enter at announcement, exit as prices recover toward prior levels.</div>
+    </div>
+  </div>
+
+  <!-- BACKTEST PERF -->
+  <div class="oos-banner">
+    <div class="eyebrow">Backtest 2014–2025 · $10M Portfolio Simulation · 790 Trades</div>
+    <h3>+$5,931,430 Combined Cumulative P&amp;L</h3>
+    <p>Short strategy contributed +$2.27M · Long strategy contributed +$3.66M · 54.2% combined win rate across 790 trades</p>
+    <div class="oos-stats">
+      <div class="oos-stat"><div class="v">+59.3%</div><div class="l">Cumulative ROI · 11 Years</div></div>
+      <div class="oos-stat"><div class="v">+5.4%</div><div class="l">Annualized Return</div></div>
+      <div class="oos-stat"><div class="v">+0.75%</div><div class="l">Per-Trade Avg ROI ($1M position)</div></div>
+      <div class="oos-stat"><div class="v">0.839</div><div class="l">Sharpe Ratio (vs. S&amp;P 0.723)</div></div>
+    </div>
+  </div>
+
+  <div class="perf-grid">
+    <div class="perf-card highlight">
+      <div class="p-label">SHORT P&amp;L</div>
+      <div class="p-val">+$2.27M</div>
+      <div class="p-desc">405 trades · Shock + Neg-Sensitive firms</div>
+    </div>
+    <div class="perf-card highlight">
+      <div class="p-label">LONG P&amp;L</div>
+      <div class="p-val">+$3.66M</div>
+      <div class="p-desc">385 trades · Expected + Pos-Resilient firms</div>
+    </div>
+    <div class="perf-card">
+      <div class="p-label">Sharpe Ratio</div>
+      <div class="p-val" style="color:var(--navy-800);">0.839</div>
+      <div class="p-desc">vs. S&amp;P 500 Sharpe of 0.723 over same period</div>
+    </div>
+    <div class="perf-card">
+      <div class="p-label">Combined Win Rate</div>
+      <div class="p-val" style="color:var(--navy-800);">54.2%</div>
+      <div class="p-desc">790 total backtested trades 2014–2025</div>
+    </div>
+  </div>
+
+  <!-- OOS -->
+  <div class="card card-pad" style="border:2px solid rgba(201,168,76,0.4);background:var(--gold-soft);">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div class="gold-tag" style="margin-bottom:10px;">Out-of-Sample Validation</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--navy-800);">Q1 2026: +$379,565</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">Realized P&amp;L on $10M portfolio · 72.2% win rate · p = 0.036**</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="padding:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--amber);">+3.80%</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-top:4px;">ROI Single Quarter</div>
         </div>
-        <div style="border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:14px;background:rgba(245,158,11,0.05);">
-          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--yellow);">BREAKPOINT 2021</div>
-          <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">162.8</div>
-          <div style="font-size:11px;color:var(--text-muted);">F-Stat · p &lt; 0.001 · EV/Tech era onset</div>
+        <div style="padding:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--amber);">+15.2%</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-top:4px;">Annualized Run Rate</div>
         </div>
-        <div style="border:1px solid var(--border);border-radius:8px;padding:14px;background:var(--surface2);">
-          <div style="font-size:11px;color:var(--text-muted);line-height:1.6;">Major reforms post-2014 made statistically significant impacts on market reactions to recalls. The EV/Tech era introduces new recall dynamics driven by software complexity and OTA updates.</div>
+        <div style="padding:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--amber);">+2.1%</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-top:4px;">Per-Trade Avg ROI</div>
+        </div>
+        <div style="padding:14px;background:var(--white);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--amber);">72.2%</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);margin-top:4px;">Win Rate Q1 2026</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="panel">
-    <div class="panel-title">Research <span>Limitations</span></div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:200px;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-muted);">
-        <strong style="color:var(--text);">Transaction Fees</strong><br>Strategy win rates don't account for bid-ask spreads and brokerage fees
+  <div class="grid-2 mt-24">
+    <div class="card card-pad">
+      <div class="card-header">Cumulative P&amp;L Over Time [SHORT + LONG]</div>
+      <div class="card-sub">Stylized path · backtest 2014–2025 · $10M portfolio</div>
+      <div class="chart-container" style="height:260px;"><canvas id="cumplChart"></canvas></div>
+    </div>
+    <div class="card card-pad">
+      <div class="card-header">CAR Path Post-Announcement [−1, +7]</div>
+      <div class="card-sub">Short: gradual drift · Long: overreaction then rebound</div>
+      <div class="chart-container" style="height:260px;"><canvas id="carPathChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ APPENDIX ════════════════ -->
+<section class="section" id="appendix">
+  <div class="sec-header">
+    <div class="sec-num" style="color:var(--text-subtle);">A</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">Technical Detail</div>
+      <h2 class="sec-title">Appendix</h2>
+      <p class="sec-desc">Extended methodology, model parameters, and statistical detail not shown on the competition poster. Intended for judges and reviewers who want to examine the full analytical framework.</p>
+    </div>
+  </div>
+
+  <!-- A1: NLP CLASSIFICATION -->
+  <div class="app-section">
+    <div class="app-section-title">A1 — Text Analysis: Severity Keyword Scoring &amp; Mechanical vs. Technical Classification</div>
+    <div class="app-section-sub">Text analysis covered two distinct tasks: (1) <strong>keyword-based severity scoring</strong> — assigning consequence weights using a tiered dictionary of danger terms anchored to DOT/HLDI liability benchmarks; and (2) <strong>LLM classification</strong> via Claude Sonnet — distinguishing mechanical from technical root causes using full consequence text. Both pipelines produced auditable output columns added to the final dataset.</div>
+
+    <div class="grid-1-1-wide">
+      <div class="nlp-flow">
+        <div class="nlp-step">
+          <div class="nlp-num">1</div>
+          <div class="nlp-content">
+            <div class="nlp-title">Severity Scoring via Keyword Matching</div>
+            <div class="nlp-desc">Each recall's consequence summary was scanned for danger-tier keywords. Presence of a keyword added that tier's weight to the recall's severity score. Scores were then banded into Low (0.0–3.0), Moderate (3.0–5.9), and High (6.0–10.0).</div>
+            <div class="nlp-code"><span class="cm"># Tier weights applied if keyword found in consequence text</span><br><span class="kw">TIER_WEIGHTS</span> = {<br>&nbsp;&nbsp;<span class="str">'death'</span>: 40, <span class="str">'fatal'</span>: 40,<br>&nbsp;&nbsp;<span class="str">'fire'</span>: 30, <span class="str">'explosion'</span>: 25,<br>&nbsp;&nbsp;<span class="str">'rollover'</span>: 25, <span class="str">'crash'</span>: 20,<br>&nbsp;&nbsp;<span class="str">'injury'</span>: 15, <span class="str">'loss of function'</span>: 10,<br>&nbsp;&nbsp;<span class="str">'property'</span>: 5<br>}</div>
+          </div>
+        </div>
+        <div class="nlp-step">
+          <div class="nlp-num">2</div>
+          <div class="nlp-content">
+            <div class="nlp-title">Text Preprocessing &amp; Combination</div>
+            <div class="nlp-desc">The recall description, consequence summary, and corrective action were combined into a single <code>combined_text</code> field per recall — lowercased and stripped of punctuation — for use in the mechanical vs. technical classification step.</div>
+            <div class="nlp-code"><span class="kw">df</span>[<span class="str">'combined_text'</span>] = (<br>&nbsp;&nbsp;<span class="kw">df</span>[<span class="str">'description_clean'</span>] + <span class="str">' '</span> +<br>&nbsp;&nbsp;<span class="kw">df</span>[<span class="str">'consequence_clean'</span>]<br>).str.lower().str.replace(<span class="str">r'[^\w\s]'</span>, <span class="str">''</span>)</div>
+          </div>
+        </div>
+        <div class="nlp-step">
+          <div class="nlp-num">3</div>
+          <div class="nlp-content">
+            <div class="nlp-title">Rule-Based Keyword Scoring for Mech/Tech</div>
+            <div class="nlp-desc">Two scores — <code>mech_score</code> and <code>tech_score</code> — were computed from keyword dictionaries. Mechanical keywords included terms like "brake," "crack," "weld," "leak." Technical keywords included "software," "firmware," "sensor," "module," "ECU," "algorithm."</div>
+            <div class="classify-pill-row">
+              <span class="classify-pill pill-mech">brake · weld · leak · crack · seal</span>
+              <span class="classify-pill pill-tech">software · firmware · sensor · ECU · module</span>
+              <span class="classify-pill pill-amb">ambiguous · unknown · other</span>
+            </div>
+          </div>
+        </div>
+        <div class="nlp-step">
+          <div class="nlp-num">4</div>
+          <div class="nlp-content">
+            <div class="nlp-title">LLM Classification via Claude Sonnet</div>
+            <div class="nlp-desc">Every recall was sent to Claude Sonnet with a strict system prompt defining root-cause criteria. The model returned: a <strong>label</strong> (MECHANICAL / TECHNICAL / AMBIGUOUS), a <strong>confidence score</strong> (0–1), and a <strong>one-sentence rationale</strong>.</div>
+            <div style="margin-top:10px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--text-muted);">
+                <span>Average confidence — Mechanical</span><span>0.97</span>
+              </div>
+              <div class="conf-meter"><div class="conf-fill" style="width:97%;"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;margin-bottom:4px;font-size:11px;color:var(--text-muted);">
+                <span>Average confidence — Technical</span><span>0.93</span>
+              </div>
+              <div class="conf-meter"><div class="conf-fill" style="width:93%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="nlp-step">
+          <div class="nlp-num">5</div>
+          <div class="nlp-content">
+            <div class="nlp-title">Output: Four Auditable Columns</div>
+            <div class="nlp-desc">The final dataset added four columns per recall, making every classification auditable: <code>recall_class_v2</code>, <code>class_confidence</code>, <code>class_rationale</code>, and <code>class_method</code> (LLM vs. rule-based fallback).</div>
+            <div class="classify-pill-row">
+              <span class="classify-pill pill-mech">MECHANICAL · 4,264 recalls · 78.4%</span>
+              <span class="classify-pill pill-tech">TECHNICAL · 1,085 recalls · 19.9%</span>
+              <span class="classify-pill pill-amb">AMBIGUOUS · 87 recalls · 1.6%</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div style="flex:1;min-width:200px;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-muted);">
-        <strong style="color:var(--text);">Pre-Announcement Leakage</strong><br>Limited public information before official NHTSA announcements
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="dark-card">
+          <div class="label">Why LLM Classification?</div>
+          <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;margin-top:6px;">Keyword scoring misclassifies borderline cases — e.g., an electrical recall caused by a corroded wire (mechanical root cause) vs. a software glitch (technical). Claude Sonnet reads the full consequence text and applies root-cause reasoning, not surface-level term matching.</p>
+        </div>
+        <div class="card card-pad">
+          <div class="card-header">Classification Example</div>
+          <div style="background:var(--navy-900);border-radius:4px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#e2e8f0;line-height:1.7;margin-top:8px;">
+            <div style="color:#94a3b8;margin-bottom:6px;">// Recall text (simplified)</div>
+            <div style="color:#86efac;">"The positive battery cable connection may become loose, causing stalling and increasing the risk of fire."</div>
+            <div style="color:#94a3b8;margin-top:10px;margin-bottom:4px;">// LLM output</div>
+            <div><span style="color:#e8c97a;">label:</span> MECHANICAL</div>
+            <div><span style="color:#e8c97a;">confidence:</span> 0.97</div>
+            <div><span style="color:#e8c97a;">rationale:</span> <span style="color:#c4b5fd;">"Root cause is a physically loose/improperly secured cable connection, requiring mechanical inspection and repair."</span></div>
+          </div>
+        </div>
+        <div class="card card-pad">
+          <div class="card-header">Classification Breakdown</div>
+          <div class="chart-container" style="height:180px;"><canvas id="appendClassChart"></canvas></div>
+        </div>
       </div>
-      <div style="flex:1;min-width:200px;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-muted);">
-        <strong style="color:var(--text);">Firm Coverage</strong><br>Deeper firm-level analysis completed for Ford and Tesla; ongoing for other firms
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- A2: SHARPE COMPARISON -->
+  <div class="app-section">
+    <div class="app-section-title">A2 — Risk-Adjusted Performance vs. S&amp;P 500</div>
+    <div class="app-section-sub">The strategy's Sharpe ratio of 0.839 outperforms the S&amp;P 500's 0.723 over the same 2014–2025 backtest period, indicating superior risk-adjusted return per unit of volatility taken.</div>
+
+    <div class="grid-1-1-wide">
+      <div>
+        <table class="sharpe-table">
+          <thead>
+            <tr><th>Metric</th><th>Our Strategy</th><th>S&amp;P 500 (Benchmark)</th><th>Edge</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sharpe Ratio</strong></td>
+              <td class="winner">0.839</td>
+              <td class="mono">0.723</td>
+              <td style="color:var(--green);font-weight:600;">+0.116</td>
+            </tr>
+            <tr>
+              <td><strong>Annualized Return</strong></td>
+              <td class="winner">+5.4%</td>
+              <td class="mono">~9.8%</td>
+              <td style="font-size:11px;color:var(--text-muted);">Lower return, lower risk</td>
+            </tr>
+            <tr>
+              <td><strong>Cumulative Return</strong></td>
+              <td class="winner">+59.3%</td>
+              <td class="mono">~174%</td>
+              <td style="font-size:11px;color:var(--text-muted);">Strategy is event-driven, not buy-and-hold</td>
+            </tr>
+            <tr>
+              <td><strong>Capital at Risk</strong></td>
+              <td class="winner">Per-event sizing</td>
+              <td class="mono">Full allocation</td>
+              <td style="color:var(--green);font-weight:600;">Lower exposure</td>
+            </tr>
+            <tr>
+              <td><strong>Win Rate</strong></td>
+              <td class="winner">54.2%</td>
+              <td class="mono">N/A (passive)</td>
+              <td style="color:var(--green);font-weight:600;">Statistically significant</td>
+            </tr>
+            <tr>
+              <td><strong>OOS Win Rate (Q1 2026)</strong></td>
+              <td class="winner">72.2%</td>
+              <td class="mono">N/A</td>
+              <td style="color:var(--green);font-weight:600;">p = 0.036**</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:16px;padding:16px;background:var(--gold-soft);border:1px solid var(--gold);border-radius:6px;">
+          <p style="font-size:12px;color:var(--navy-700);line-height:1.7;"><strong>Interpretation:</strong> The strategy does not aim to replace a passive index allocation. It is an <em>event-driven overlay</em> — active only when a qualifying recall-surprise-sensitivity combination is identified. The higher Sharpe demonstrates that for the capital it puts at risk, it generates superior risk-adjusted returns relative to the benchmark.</p>
+        </div>
       </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card card-pad">
+          <div class="card-header">Sharpe Ratio Comparison</div>
+          <div class="card-sub">Strategy vs. S&amp;P 500 · 2014–2025</div>
+          <div class="chart-container" style="height:200px;"><canvas id="sharpeChart"></canvas></div>
+        </div>
+        <div class="dark-card">
+          <div class="label">Sharpe Formula</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold-light);margin:10px 0;line-height:1.8;">S = (R<sub>p</sub> − R<sub>f</sub>) / σ<sub>p</sub></div>
+          <div class="desc">Where R<sub>p</sub> = strategy return, R<sub>f</sub> = risk-free rate, σ<sub>p</sub> = annualized standard deviation of returns. A higher Sharpe indicates more return per unit of risk.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- A3: SEVERITY MODEL -->
+  <div class="app-section">
+    <div class="app-section-title">A3 — Severity Scoring Model Detail</div>
+    <div class="app-section-sub">The 3-tier severity system (Low / Moderate / High) is constructed from an 8-tier weighted consequence scoring model anchored to DOT valuation benchmarks and HLDI insurance data.</div>
+    <div class="grid-1-1-wide">
+      <div>
+        <table class="sev-table">
+          <thead><tr><th>Tier</th><th>Weight</th><th>Liability Basis</th><th>Relative Weight</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:#b71c1c;">Death / Fatality</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#b71c1c;">40</td><td style="font-size:11px;">DOT VSL $13.7M; wrongful death avg $973K</td><td><div class="weight-bar"><div class="weight-fill" style="width:100%;background:#b71c1c;"></div></div></td></tr>
+            <tr><td><strong style="color:#bf360c;">Fire</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#bf360c;">30</td><td style="font-size:11px;">Aligned to rollover risk tier</td><td><div class="weight-bar"><div class="weight-fill" style="width:75%;background:#e64a19;"></div></div></td></tr>
+            <tr><td><strong style="color:#e64a19;">Explosion</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#e64a19;">25</td><td style="font-size:11px;">HLDI avg fire claim $9,655; total loss common</td><td><div class="weight-bar"><div class="weight-fill" style="width:62%;background:#f57f17;"></div></div></td></tr>
+            <tr><td><strong style="color:#f57f17;">Rollover</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#f57f17;">25</td><td style="font-size:11px;">~35% of fatal crashes; settlements $50K–$1M+</td><td><div class="weight-bar"><div class="weight-fill" style="width:62%;background:#fbc02d;"></div></div></td></tr>
+            <tr><td><strong style="color:#f9a825;">Crash / Collision</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#f9a825;">20</td><td style="font-size:11px;">Avg settlement $30K–$37K</td><td><div class="weight-bar"><div class="weight-fill" style="width:50%;background:#fbc02d;"></div></div></td></tr>
+            <tr><td><strong style="color:#1a5c2a;">Injury</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#1a5c2a;">15</td><td style="font-size:11px;">Minor injury avg $10K–$15K</td><td><div class="weight-bar"><div class="weight-fill" style="width:37%;background:#2e7d32;"></div></div></td></tr>
+            <tr><td><strong style="color:#2a4368;">Loss of Function</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#2a4368;">10</td><td style="font-size:11px;">PDO/near-miss analog; $3K–$15K property</td><td><div class="weight-bar"><div class="weight-fill" style="width:25%;background:#1565c0;"></div></div></td></tr>
+            <tr><td><strong style="color:#6b5f4a;">Property / Minor</strong></td><td style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#6b5f4a;">5</td><td style="font-size:11px;">Lowest liability; baseline presence weight only</td><td><div class="weight-bar"><div class="weight-fill" style="width:12%;background:#90a4ae;"></div></div></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:16px;padding:14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;">
+          <p style="font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Banding:</strong> Final severity scores are banded into Low (0.0–3.0), Moderate (3.0–5.9), and High (6.0–10.0) for analysis. Dataset contains: High = 878 recalls, Moderate = 541, Low = 4,017.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card card-pad">
+          <div class="card-header">Severity Band Distribution</div>
+          <div class="chart-container" style="height:180px;"><canvas id="appendSevChart"></canvas></div>
+        </div>
+        <div class="card card-pad">
+          <div class="card-header">Affected Weight Formula</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.8;">Severity bands are adjusted by an <strong>affected weight</strong> (log-scaled vehicle count) to produce a final composite risk score. This prevents large-volume minor recalls from outscoring small-volume critical ones on raw count alone.</div>
+          <div style="background:var(--navy-900);border-radius:4px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#e2e8f0;margin-top:12px;line-height:1.7;">
+            <span style="color:#e8c97a;">actual_risk</span> = severity_score × log(n_vehicles)<br>
+            <span style="color:#e8c97a;">expected_risk</span> = f(prior_365d_history)<br>
+            <span style="color:#e8c97a;">surprise</span> = actual_risk − expected_risk
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- A4: EVENT STUDY PARAMS -->
+  <div class="app-section">
+    <div class="app-section-title">A4 — Event Study Parameters</div>
+    <div class="app-section-sub">Market model parameters estimated over a clean estimation window, with the event window excluded to prevent contamination of the normal return benchmark.</div>
+    <div class="event-params">
+      <div class="ep-card"><div class="ep-label">Estimation Window</div><div class="ep-val">[−120, −10]</div><div class="ep-desc">110 trading days before announcement, ending 10 days prior to event window to avoid contamination</div></div>
+      <div class="ep-card"><div class="ep-label">Event Window (CAR)</div><div class="ep-val">[−5, +5]</div><div class="ep-desc">Primary event study window; also computed at [−1,+1] and [0,+1] for robustness</div></div>
+      <div class="ep-card"><div class="ep-label">Trading Window</div><div class="ep-val">[−1, +7]</div><div class="ep-desc">Strategy entry/exit window; captures delayed underreaction and overreaction correction</div></div>
+      <div class="ep-card"><div class="ep-label">Benchmark</div><div class="ep-val">S&amp;P 500</div><div class="ep-desc">Market model: R_it = α + β·R_mt + ε_it; α_hat and β_hat estimated per firm per period</div></div>
+      <div class="ep-card"><div class="ep-label">Min. Obs. Required</div><div class="ep-val">84</div><div class="ep-desc">Minimum trading days in estimation window required for a firm-period to be included</div></div>
+      <div class="ep-card"><div class="ep-label">CAR Significance</div><div class="ep-val">t-test</div><div class="ep-desc">Two-tailed t-test on cumulative abnormal return; p-values reported at 0.05, 0.01, 0.001 thresholds</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- A5: LIMITATIONS -->
+  <div class="app-section">
+    <div class="app-section-title">A5 — Limitations &amp; Future Work</div>
+    <div class="app-section-sub">Acknowledged constraints on the current study and directions for extension.</div>
+    <div class="limit-grid">
+      <div class="limit-card"><strong>Transaction Costs</strong>Bid-ask spreads and brokerage fees are not reflected in the backtest. Real-world implementation would reduce gross win rates and P&L figures.</div>
+      <div class="limit-card"><strong>Pre-Announcement Leakage</strong>Limited public information is available before the official NHTSA filing date. Any pre-filing media coverage would affect the entry signal timing.</div>
+      <div class="limit-card"><strong>API Rate Limits</strong>LLM classification was subject to Anthropic API rate limits, requiring batched processing. A small number of recalls were classified via fallback rule-based method.</div>
+      <div class="limit-card"><strong>Firm Coverage</strong>Deep firm-level breakdowns (Pre/Post/Tech era) fully completed for Ford and Tesla. Other firms remain at pooled post-2014 level in this version.</div>
+      <div class="limit-card"><strong>Short-Selling Constraints</strong>Not all stocks in the dataset have liquid options or easy short access. Practical execution of the SHORT strategy may require ETF or options-based implementation.</div>
+      <div class="limit-card"><strong>Future Work</strong>Extend firm-level analysis to all major manufacturers, incorporate intraday timing signals, and test the framework on European recall databases (RAPEX).</div>
     </div>
   </div>
 </section>
 
 </main>
 
-<div class="tooltip-box" id="tooltip"></div>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-title">Finding the Signal in Automobile <em>Recall Risk</em></div>
+        <div class="footer-desc">A breakpoint event study of 5,436 NHTSA vehicle recalls across major U.S. manufacturers 2000–2025. Combining NLP classification, structural break analysis, and an event-driven trading strategy.</div>
+      </div>
+      <div class="footer-block">
+        <div class="label">Data Sources</div>
+        <p>NHTSA Recall Database<br>Yahoo Finance Market Data<br>Anthropic Claude Sonnet API<br>S&amp;P 500 Index (Benchmark)</p>
+      </div>
+      <div class="footer-block">
+        <div class="label">Team</div>
+        <p>Ryan Brid<br>Vincent D'Esposito<br>Augusta Domingo<br>Dylan Hahami<br><br>Advisor: Michael D. Herley, D.B.A.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>BAC 2026 · St. John's University</span>
+      <span>Peter J. Tobin College of Business</span>
+    </div>
+  </div>
+</footer>
 
 <script>
-// ─── DATA ───
-const DATA = {"year_trend":[{"year":"2000","n":98,"avg_car":-0.257,"mech":87,"tech":8},{"year":"2001","n":72,"avg_car":0.296,"mech":69,"tech":3},{"year":"2002","n":62,"avg_car":0.682,"mech":54,"tech":7},{"year":"2003","n":77,"avg_car":0.171,"mech":58,"tech":6},{"year":"2004","n":88,"avg_car":0.158,"mech":79,"tech":5},{"year":"2005","n":80,"avg_car":-0.16,"mech":70,"tech":9},{"year":"2006","n":61,"avg_car":0.197,"mech":54,"tech":5},{"year":"2007","n":61,"avg_car":0.597,"mech":45,"tech":11},{"year":"2008","n":61,"avg_car":0.145,"mech":52,"tech":6},{"year":"2009","n":56,"avg_car":0.469,"mech":51,"tech":3},{"year":"2010","n":124,"avg_car":0.039,"mech":84,"tech":13},{"year":"2011","n":133,"avg_car":0.056,"mech":93,"tech":26},{"year":"2012","n":154,"avg_car":0.533,"mech":122,"tech":28},{"year":"2013","n":183,"avg_car":-0.255,"mech":143,"tech":40},{"year":"2014","n":280,"avg_car":-0.368,"mech":233,"tech":42},{"year":"2015","n":289,"avg_car":0.037,"mech":222,"tech":65},{"year":"2016","n":318,"avg_car":-0.029,"mech":266,"tech":48},{"year":"2017","n":315,"avg_car":0.091,"mech":265,"tech":42},{"year":"2018","n":330,"avg_car":0.051,"mech":260,"tech":63},{"year":"2019","n":339,"avg_car":0.002,"mech":264,"tech":69},{"year":"2020","n":324,"avg_car":0.019,"mech":273,"tech":44},{"year":"2021","n":405,"avg_car":0.012,"mech":319,"tech":82},{"year":"2022","n":379,"avg_car":-0.065,"mech":274,"tech":101},{"year":"2023","n":378,"avg_car":-0.038,"mech":274,"tech":97},{"year":"2024","n":396,"avg_car":-0.083,"mech":276,"tech":114},{"year":"2025","n":430,"avg_car":0.236,"mech":277,"tech":148}],"firms":[{"ticker":"F","name":"Ford","sensitivity":"positive","pre2014_car":0.122,"post2014_car":0.215,"tech_era_car":0.98,"color":"#22c55e"},{"ticker":"TSLA","name":"Tesla","sensitivity":"positive","pre2014_car":2.754,"post2014_car":4.91,"tech_era_car":2.45,"color":"#f59e0b"},{"ticker":"HMC","name":"Honda","sensitivity":"negative","pre2014_car":-0.031,"post2014_car":-0.185,"tech_era_car":-1.46,"color":"#ef4444"},{"ticker":"BMW","name":"BMW","sensitivity":"negative","pre2014_car":-0.199,"post2014_car":-0.9,"tech_era_car":-0.9,"color":"#ef4444"},{"ticker":"GM","name":"GM","sensitivity":"neutral","pre2014_car":0.489,"post2014_car":-0.129,"tech_era_car":0.0,"color":"#94a3b8"},{"ticker":"TM","name":"Toyota","sensitivity":"neutral","pre2014_car":-1.055,"post2014_car":0.0,"tech_era_car":0.0,"color":"#94a3b8"}],"components":[{"comp":"powertrain","n":949},{"comp":"safety","n":762},{"comp":"battery_ev","n":556},{"comp":"electrical","n":541},{"comp":"steering_suspension","n":511},{"comp":"airbags","n":503},{"comp":"OTHER","n":473},{"comp":"brakes","n":450}],"severity":[{"cat":"MINIMAL","n":175,"avg_car":0.067},{"cat":"LOW","n":1898,"avg_car":-0.008},{"cat":"MODERATE","n":3101,"avg_car":0.039},{"cat":"HIGH","n":253,"avg_car":0.153},{"cat":"CRITICAL","n":66,"avg_car":0.236}]};
+// ════════ TAB NAVIGATION ════════
+const chartInstances = {};
 
-const SEV_TABLE = [
-  ['Death/Fatality','40','DOT VSL $13.7M; wrongful death avg $973K'],
-  ['Fire','30','Aligned to rollover risk tier'],
-  ['Explosion','25','HLDI avg fire claim $9,655'],
-  ['Rollover','25','~35% of fatal crashes; $50K–$1M+ settlements'],
-  ['Crash/Collision','20','Avg settlement $30K–$37K'],
-  ['Injury','15','Minor injury avg $10K–$15K'],
-  ['Loss of Function','10','PDO/near-miss analog'],
-  ['Property/Minor','5','Baseline presence weight'],
+function destroyChart(id) {
+  if (chartInstances[id]) {
+    chartInstances[id].destroy();
+    delete chartInstances[id];
+  }
+}
+
+function makeChart(id, config) {
+  destroyChart(id);
+  const ctx = document.getElementById(id);
+  if (!ctx) return null;
+  chartInstances[id] = new Chart(ctx, config);
+  return chartInstances[id];
+}
+
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    const target = this.dataset.tab;
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById(target).classList.add('active');
+    window.scrollTo({ top: document.querySelector('.nav-tabs').offsetTop, behavior: 'smooth' });
+    setTimeout(() => initCharts(target), 80);
+  });
+});
+
+// ════════ FIRM DATA ════════
+const FIRMS = [
+  { ticker:'F', name:'Ford Motor Company', sens:'pos', pre:+0.122, post:+0.215, ev:+0.98, pPre:null, pPost:null, pEv:0.0016 },
+  { ticker:'TSLA', name:'Tesla, Inc.', sens:'pos', pre:+2.754, post:+4.91, ev:+2.45, pPre:null, pPost:0.01, pEv:0.05 },
+  { ticker:'HMC', name:'Honda (American Honda Motor Co.)', sens:'neg', pre:-0.031, post:-0.63, ev:-1.46, pPre:null, pPost:0.042, pEv:0.001 },
+  { ticker:'BMWY', name:'BMW of North America', sens:'neg', pre:-0.199, post:-0.90, ev:-0.90, pPre:null, pPost:0.003, pEv:0.003 },
+  { ticker:'HMC2', name:'Hyundai', sens:'neg', pre:-0.05, post:-1.22, ev:null, pPre:null, pPost:0.017, pEv:null },
+  { ticker:'MBGA', name:'Mercedes-Benz', sens:'neg', pre:-0.03, post:-0.56, ev:null, pPre:null, pPost:0.044, pEv:null },
+  { ticker:'GM', name:'General Motors', sens:'neu', pre:+0.489, post:-0.129, ev:0.00, pPre:null, pPost:null, pEv:null },
+  { ticker:'TM', name:'Toyota Motor Corp.', sens:'neu', pre:-1.055, post:0.00, ev:0.00, pPre:null, pPost:null, pEv:null },
 ];
 
-// ─── TABS ───
-function showTab(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
-  setTimeout(() => renderCharts(id), 50);
-}
-
-// ─── CHART HELPERS ───
-const COLORS = {
-  accent: '#3b82f6', accent2: '#0ea5e9',
-  green: '#22c55e', red: '#ef4444', yellow: '#f59e0b',
-  slate: '#94a3b8', border: '#1e2d45', text: '#e2e8f0', muted: '#64748b'
-};
-
-function px(canvas) { return window.devicePixelRatio || 1; }
-
-function setupCanvas(id) {
-  const c = document.getElementById(id);
-  if (!c) return null;
-  const dpr = window.devicePixelRatio || 1;
-  const rect = c.parentElement.getBoundingClientRect();
-  c.width = rect.width * dpr;
-  c.height = c.height * dpr;
-  c.style.width = rect.width + 'px';
-  c.style.height = (c.height / dpr) + 'px';
-  const ctx = c.getContext('2d');
-  ctx.scale(dpr, dpr);
-  ctx._w = rect.width;
-  ctx._h = c.height / dpr;
-  return ctx;
-}
-
-function drawGrid(ctx, x0, y0, w, h, ny=5) {
-  ctx.strokeStyle = COLORS.border;
-  ctx.lineWidth = 0.5;
-  for (let i=0; i<=ny; i++) {
-    const y = y0 + (h / ny) * i;
-    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0+w, y); ctx.stroke();
-  }
-}
-
-// ─── RENDER CHARTS ───
-const rendered = new Set();
-function renderCharts(tab) {
-  if (tab === 'overview') {
-    if (!rendered.has('year')) { drawYearChart(); rendered.add('year'); }
-    if (!rendered.has('comp')) { drawCompChart(); rendered.add('comp'); }
-    if (!rendered.has('sev')) { drawSevChart(); rendered.add('sev'); }
-    if (!rendered.has('tm')) { drawTechMechChart(); rendered.add('tm'); }
-  }
-  if (tab === 'firms') {
-    buildFirmCards();
-    if (!rendered.has('firmEra')) { drawFirmEraChart(); rendered.add('firmEra'); }
-  }
-  if (tab === 'surprise') {
-    if (!rendered.has('interaction')) { drawInteractionChart(); rendered.add('interaction'); }
-  }
-  if (tab === 'strategy') {
-    if (!rendered.has('carPath')) { drawCarPathChart(); rendered.add('carPath'); }
-  }
-  if (tab === 'methodology') {
-    buildSevTable();
-  }
-}
-
-// ─── YEAR CHART ───
-function drawYearChart() {
-  const ctx = setupCanvas('yearChart');
-  if (!ctx) return;
-  const W = ctx._w, H = ctx._h;
-  const pad = {l:44, r:16, t:10, b:30};
-  const cw = W - pad.l - pad.r, ch = H - pad.t - pad.b;
-  const data = DATA.year_trend;
-  const maxN = Math.max(...data.map(d=>d.n));
-  const minC = Math.min(...data.map(d=>d.avg_car));
-  const maxC = Math.max(...data.map(d=>d.avg_car));
-
-  // gridlines
-  drawGrid(ctx, pad.l, pad.t, cw, ch, 4);
-
-  const xStep = cw / (data.length - 1);
-
-  // Shade eras
-  const era2014 = data.findIndex(d=>d.year==='2014');
-  const era2021 = data.findIndex(d=>d.year==='2021');
-
-  ctx.fillStyle = 'rgba(59,130,246,0.04)';
-  ctx.fillRect(pad.l, pad.t, era2014 * xStep, ch);
-  ctx.fillStyle = 'rgba(245,158,11,0.04)';
-  ctx.fillRect(pad.l + era2014*xStep, pad.t, (era2021-era2014)*xStep, ch);
-  ctx.fillStyle = 'rgba(239,68,68,0.04)';
-  ctx.fillRect(pad.l + era2021*xStep, pad.t, (data.length-1-era2021)*xStep, ch);
-
-  // Breakpoint lines
-  [era2014, era2021].forEach((i, idx) => {
-    const x = pad.l + i*xStep;
-    ctx.strokeStyle = idx===0 ? COLORS.accent : COLORS.yellow;
-    ctx.lineWidth = 1; ctx.setLineDash([4,4]);
-    ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+ch); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = idx===0 ? COLORS.accent : COLORS.yellow;
-    ctx.font = '9px DM Mono';
-    ctx.fillText(idx===0?'2014':'2021', x+3, pad.t+12);
-  });
-
-  // Bar chart (recall count)
-  const bw = xStep * 0.6;
-  data.forEach((d, i) => {
-    const x = pad.l + i*xStep - bw/2;
-    const bh = (d.n / maxN) * ch;
-    ctx.fillStyle = 'rgba(59,130,246,0.25)';
-    ctx.fillRect(x, pad.t + ch - bh, bw, bh);
-  });
-
-  // CAR line
-  const carRange = maxC - minC || 1;
-  const yMap = v => pad.t + ch - ((v - minC) / carRange) * ch;
-  ctx.strokeStyle = COLORS.yellow;
-  ctx.lineWidth = 2; ctx.setLineDash([]);
-  ctx.beginPath();
-  data.forEach((d, i) => {
-    const x = pad.l + i*xStep;
-    if (i===0) ctx.moveTo(x, yMap(d.avg_car));
-    else ctx.lineTo(x, yMap(d.avg_car));
-  });
-  ctx.stroke();
-
-  // X axis labels
-  ctx.fillStyle = COLORS.muted; ctx.font = '9px Inter';
-  ctx.textAlign = 'center';
-  ['2000','2005','2010','2014','2015','2020','2021','2025'].forEach(yr => {
-    const i = data.findIndex(d=>d.year===yr);
-    if (i>=0) ctx.fillText(yr, pad.l + i*xStep, pad.t+ch+18);
-  });
-
-  // Y axis
-  ctx.textAlign = 'right'; ctx.fillStyle = COLORS.muted;
-  [0, maxN/2, maxN].forEach(v => {
-    const y = pad.t + ch - (v/maxN)*ch;
-    ctx.fillText(Math.round(v), pad.l-6, y+3);
-  });
-
-  // Legend
-  const lx = pad.l + 10, ly = pad.t + ch - 20;
-  ctx.fillStyle = 'rgba(59,130,246,0.5)'; ctx.fillRect(lx,ly,12,8);
-  ctx.fillStyle = COLORS.muted; ctx.font='10px Inter'; ctx.textAlign='left';
-  ctx.fillText('# Recalls', lx+15, ly+7);
-  ctx.strokeStyle=COLORS.yellow; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(lx+80,ly+4); ctx.lineTo(lx+92,ly+4); ctx.stroke();
-  ctx.fillText('Avg CAR%', lx+95, ly+7);
-}
-
-// ─── COMP CHART ───
-function drawCompChart() {
-  const ctx = setupCanvas('compChart');
-  if (!ctx) return;
-  const W = ctx._w, H = ctx._h;
-  const data = DATA.components;
-  const maxN = Math.max(...data.map(d=>d.n));
-  const pad = {l:120, r:20, t:10, b:10};
-  const bh = (H - pad.t - pad.b) / data.length - 4;
-  const cw = W - pad.l - pad.r;
-  const barColors = ['#3b82f6','#0ea5e9','#f59e0b','#22c55e','#a78bfa','#f472b6','#94a3b8','#fb923c'];
-  const labels = {'powertrain':'Powertrain','safety':'Safety','battery_ev':'Battery/EV','electrical':'Electrical','steering_suspension':'Steering/Susp.','airbags':'Airbags','OTHER':'Other','brakes':'Brakes'};
-
-  data.forEach((d, i) => {
-    const y = pad.t + i * (bh + 4);
-    const bw = (d.n / maxN) * cw;
-    ctx.fillStyle = barColors[i % barColors.length];
-    ctx.globalAlpha = 0.85;
-    ctx.beginPath();
-    ctx.roundRect ? ctx.roundRect(pad.l, y, bw, bh, 3) : ctx.rect(pad.l, y, bw, bh);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    ctx.fillStyle = COLORS.text; ctx.font = '11px Inter'; ctx.textAlign='right';
-    ctx.fillText(labels[d.comp]||d.comp, pad.l-8, y+bh/2+4);
-    ctx.fillStyle = COLORS.muted; ctx.font='10px DM Mono'; ctx.textAlign='left';
-    ctx.fillText(d.n.toLocaleString(), pad.l+bw+6, y+bh/2+4);
-  });
-}
-
-// ─── SEVERITY CHART ───
-function drawSevChart() {
-  const ctx = setupCanvas('sevChart');
-  if (!ctx) return;
-  const W = ctx._w, H = ctx._h;
-  const pad = {l:70, r:16, t:20, b:30};
-  const cw = W-pad.l-pad.r, ch = H-pad.t-pad.b;
-  const data = DATA.severity;
-  const bColors = ['#94a3b8','#3b82f6','#f59e0b','#f97316','#ef4444'];
-  const bw = cw / data.length - 8;
-  const maxAbs = Math.max(...data.map(d=>Math.abs(d.avg_car)));
-  const zeroY = pad.t + ch/2;
-
-  drawGrid(ctx, pad.l, pad.t, cw, ch, 4);
-
-  // zero line
-  ctx.strokeStyle = COLORS.border; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(pad.l, zeroY); ctx.lineTo(pad.l+cw, zeroY); ctx.stroke();
-
-  data.forEach((d, i) => {
-    const x = pad.l + i*(cw/data.length) + 4;
-    const pxH = (d.avg_car / maxAbs) * (ch/2);
-    const color = d.avg_car >= 0 ? '#22c55e' : '#ef4444';
-    ctx.fillStyle = color; ctx.globalAlpha=0.85;
-    if (d.avg_car >= 0) {
-      ctx.fillRect(x, zeroY - pxH, bw, pxH);
-    } else {
-      ctx.fillRect(x, zeroY, bw, -pxH);
-    }
-    ctx.globalAlpha=1;
-    ctx.fillStyle = COLORS.text; ctx.font='10px Inter'; ctx.textAlign='center';
-    ctx.fillText(d.cat, x+bw/2, pad.t+ch+18);
-    ctx.fillStyle = color; ctx.font='10px DM Mono';
-    ctx.fillText((d.avg_car>=0?'+':'') + d.avg_car.toFixed(3)+'%',
-      x+bw/2, d.avg_car>=0 ? zeroY-pxH-5 : zeroY-pxH+14);
-  });
-
-  ctx.fillStyle=COLORS.muted; ctx.font='9px Inter'; ctx.textAlign='right';
-  ctx.fillText('CAR%', pad.l-4, pad.t+8);
-}
-
-// ─── TECH/MECH CHART ───
-function drawTechMechChart() {
-  const ctx = setupCanvas('techMechChart');
-  if (!ctx) return;
-  const W = ctx._w, H = ctx._h;
-  const pad = {l:36, r:16, t:10, b:30};
-  const cw = W-pad.l-pad.r, ch = H-pad.t-pad.b;
-  const data = DATA.year_trend;
-  const xStep = cw/(data.length-1);
-
-  // Stacked area: mech below, tech on top
-  const totals = data.map(d => d.mech + d.tech);
-  const maxT = Math.max(...totals);
-  const yMap = v => pad.t + ch - (v/maxT)*ch;
-
-  // Tech area
-  ctx.fillStyle = 'rgba(239,68,68,0.3)';
-  ctx.beginPath();
-  data.forEach((d,i) => {
-    const x = pad.l + i*xStep;
-    if (i===0) ctx.moveTo(x, yMap(d.mech+d.tech));
-    else ctx.lineTo(x, yMap(d.mech+d.tech));
-  });
-  data.slice().reverse().forEach((d,i) => {
-    const x = pad.l + (data.length-1-i)*xStep;
-    ctx.lineTo(x, yMap(d.mech));
-  });
-  ctx.closePath(); ctx.fill();
-
-  // Mech area
-  ctx.fillStyle = 'rgba(59,130,246,0.35)';
-  ctx.beginPath();
-  data.forEach((d,i) => {
-    const x = pad.l + i*xStep;
-    if (i===0) ctx.moveTo(x, yMap(d.mech));
-    else ctx.lineTo(x, yMap(d.mech));
-  });
-  ctx.lineTo(pad.l+cw, pad.t+ch); ctx.lineTo(pad.l, pad.t+ch);
-  ctx.closePath(); ctx.fill();
-
-  // Lines
-  [['mech',COLORS.accent],['tech',COLORS.red]].forEach(([key, color]) => {
-    ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.setLineDash([]);
-    ctx.beginPath();
-    data.forEach((d,i) => {
-      const x = pad.l+i*xStep, y = key==='mech'?yMap(d.mech):yMap(d.mech+d.tech);
-      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-  });
-
-  // Breakpoints
-  [14,21].forEach((i,idx) => {
-    const x = pad.l+i*xStep;
-    ctx.strokeStyle=idx===0?COLORS.accent:COLORS.yellow; ctx.lineWidth=1; ctx.setLineDash([4,3]);
-    ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+ch); ctx.stroke();
-    ctx.setLineDash([]);
-  });
-
-  // X labels
-  ctx.fillStyle=COLORS.muted; ctx.font='9px Inter'; ctx.textAlign='center';
-  ['2000','2005','2010','2014','2021','2025'].forEach(yr=>{
-    const i=data.findIndex(d=>d.year===yr);
-    if(i>=0) ctx.fillText(yr, pad.l+i*xStep, pad.t+ch+18);
-  });
-
-  // Legend
-  ctx.textAlign='left'; ctx.font='10px Inter';
-  ctx.fillStyle='rgba(59,130,246,0.5)'; ctx.fillRect(pad.l,pad.t+2,10,6);
-  ctx.fillStyle=COLORS.muted; ctx.fillText('Mechanical',pad.l+13,pad.t+9);
-  ctx.fillStyle='rgba(239,68,68,0.5)'; ctx.fillRect(pad.l+90,pad.t+2,10,6);
-  ctx.fillText('Technical',pad.l+103,pad.t+9);
-}
-
-// ─── FIRM CARDS ───
 function buildFirmCards() {
-  const container = document.getElementById('firmCards');
+  const container = document.getElementById('firmList');
   if (container.children.length > 0) return;
-  const maxVal = 5.5;
-  DATA.firms.forEach(f => {
-    const card = document.createElement('div');
-    card.className = `firm-card ${f.sensitivity}`;
-    const eraBar = (val, label) => {
-      const absMax = maxVal;
-      const barW = Math.min(Math.abs(val)/absMax*100, 100);
-      const isPos = val >= 0;
-      const barColor = isPos ? COLORS.green : COLORS.red;
-      const valClass = isPos ? 'pos' : 'neg';
-      const sign = isPos ? '+' : '';
-      return `<div class="era-row">
-        <div class="era-label">${label}</div>
-        <div class="era-bar-wrap">
-          <div class="era-bar" style="width:${barW}%;background:${barColor};"></div>
+  FIRMS.forEach(f => {
+    const fmtCar = v => v == null ? '—' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+    const cls = v => v == null ? 'car-neu' : v >= 0 ? 'car-pos' : 'car-neg';
+    const pFmt = p => p == null ? '—' : p < 0.001 ? 'p<0.001' : 'p='+p.toFixed(3);
+    const row = document.createElement('div');
+    row.className = 'firm-row';
+    row.innerHTML = `
+      <div class="firm-accent ${f.sens}"></div>
+      <div class="firm-logo-cell"><div class="firm-logo">${f.ticker}</div></div>
+      <div class="firm-info">
+        <div style="font-size:14px;font-weight:600;color:var(--navy-800);">${f.name}</div>
+        <div class="firm-tag-row">
+          <span class="firm-tag ${f.sens}">${f.sens==='pos'?'Positive Signal':f.sens==='neg'?'Negative Signal':'Risk Priced In'}</span>
         </div>
-        <div class="era-val ${valClass}">${sign}${val.toFixed(2)}%</div>
-      </div>`;
-    };
-    const sensLabel = f.sensitivity==='positive'?'Positive Signal':f.sensitivity==='negative'?'Negative Signal':'Risk Priced In';
-    const sensClass = f.sensitivity==='positive'?'sens-pos':f.sensitivity==='negative'?'sens-neg':'sens-neu';
-    card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div>
-          <div class="firm-ticker" style="color:${f.color}">${f.ticker}</div>
-          <div class="firm-name">${f.name}</div>
-        </div>
-        <div class="firm-sens ${sensClass}">${sensLabel}</div>
       </div>
-      <div class="era-bars">
-        ${eraBar(f.pre2014_car,'Pre-2014')}
-        ${eraBar(f.post2014_car,'Post-2014')}
-        ${eraBar(f.tech_era_car,'Tech/EV')}
+      <div class="era-cells">
+        <div class="era-cell">
+          <div class="era-lbl">Pre-2014</div>
+          <div class="era-val ${cls(f.pre)}">${fmtCar(f.pre)}</div>
+          <div class="era-p">${pFmt(f.pPre)}</div>
+        </div>
+        <div class="era-cell">
+          <div class="era-lbl">Post-2014</div>
+          <div class="era-val ${cls(f.post)}">${fmtCar(f.post)}</div>
+          <div class="era-p">${pFmt(f.pPost)}</div>
+        </div>
+        <div class="era-cell">
+          <div class="era-lbl">Tech/EV Era</div>
+          <div class="era-val ${cls(f.ev)}">${fmtCar(f.ev)}</div>
+          <div class="era-p">${pFmt(f.pEv)}</div>
+        </div>
       </div>`;
-    container.appendChild(card);
+    container.appendChild(row);
   });
 }
 
-// ─── FIRM ERA CHART ───
-function drawFirmEraChart() {
-  const ctx = setupCanvas('firmEraChart');
-  if (!ctx) return;
-  const W=ctx._w, H=ctx._h;
-  const pad={l:48,r:16,t:20,b:40};
-  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
-  const firms=DATA.firms;
-  const eras=['pre2014_car','post2014_car','tech_era_car'];
-  const eraLabels=['Pre-2014','Post-2014','Tech/EV'];
-  const n=firms.length, ne=eras.length;
-  const groupW=cw/n, bw=groupW*0.25;
-  const allVals=firms.flatMap(f=>eras.map(e=>f[e]));
-  const maxAbs=Math.max(...allVals.map(Math.abs));
-  const zeroY=pad.t+ch*(maxAbs/(maxAbs*2));
+// ════════ YEAR DATA ════════
+const YR = [
+  {y:'2000',n:98,mech:87,tech:8},{y:'2001',n:72,mech:69,tech:3},{y:'2002',n:62,mech:54,tech:7},
+  {y:'2003',n:77,mech:58,tech:6},{y:'2004',n:88,mech:79,tech:5},{y:'2005',n:80,mech:70,tech:9},
+  {y:'2006',n:61,mech:54,tech:5},{y:'2007',n:61,mech:45,tech:11},{y:'2008',n:61,mech:52,tech:6},
+  {y:'2009',n:56,mech:51,tech:3},{y:'2010',n:124,mech:84,tech:13},{y:'2011',n:133,mech:93,tech:26},
+  {y:'2012',n:154,mech:122,tech:28},{y:'2013',n:183,mech:143,tech:40},{y:'2014',n:280,mech:233,tech:42},
+  {y:'2015',n:289,mech:222,tech:65},{y:'2016',n:318,mech:266,tech:48},{y:'2017',n:315,mech:265,tech:42},
+  {y:'2018',n:330,mech:260,tech:63},{y:'2019',n:339,mech:264,tech:69},{y:'2020',n:324,mech:273,tech:44},
+  {y:'2021',n:405,mech:319,tech:82},{y:'2022',n:379,mech:274,tech:101},{y:'2023',n:378,mech:274,tech:97},
+  {y:'2024',n:396,mech:276,tech:114},{y:'2025',n:430,mech:277,tech:148}
+];
 
-  drawGrid(ctx,pad.l,pad.t,cw,ch,6);
-  ctx.strokeStyle=COLORS.border; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(pad.l,zeroY); ctx.lineTo(pad.l+cw,zeroY); ctx.stroke();
+const chartDefaults = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{labels:{font:{size:11,family:"'Inter',sans-serif"},boxWidth:12,padding:12}}},
+};
+const navyBorder = '#e8dec0';
+const navyText = '#6b5f4a';
+function axisDefaults(){ return {grid:{color:'rgba(232,222,192,0.5)'},ticks:{color:navyText,font:{size:10,family:"'JetBrains Mono',monospace"}}}; }
 
-  firms.forEach((f,fi) => {
-    const gx=pad.l+fi*groupW+groupW/2;
-    eras.forEach((era,ei) => {
-      const val=f[era];
-      const x=gx+(ei-(ne-1)/2)*(bw+2);
-      const barH=(val/maxAbs)*(ch/2);
-      const eraColors=['rgba(59,130,246,0.85)','rgba(245,158,11,0.85)','rgba(239,68,68,0.85)'];
-      ctx.fillStyle=eraColors[ei];
-      if(val>=0) ctx.fillRect(x,zeroY-barH,bw,barH);
-      else ctx.fillRect(x,zeroY,bw,-barH);
-    });
-    // Firm label
-    ctx.fillStyle=f.color; ctx.font='12px DM Mono'; ctx.textAlign='center';
-    ctx.fillText(f.ticker, gx, pad.t+ch+20);
-  });
-
-  // Legend
-  const eraColors2=['rgba(59,130,246,0.85)','rgba(245,158,11,0.85)','rgba(239,68,68,0.85)'];
-  eraLabels.forEach((l,i)=>{
-    const x=pad.l+cw-240+i*80;
-    ctx.fillStyle=eraColors2[i]; ctx.fillRect(x,pad.t+2,10,8);
-    ctx.fillStyle=COLORS.muted; ctx.font='10px Inter'; ctx.textAlign='left';
-    ctx.fillText(l,x+13,pad.t+10);
-  });
-
-  // Y axis
-  ctx.fillStyle=COLORS.muted; ctx.font='9px DM Mono'; ctx.textAlign='right';
-  [-maxAbs,0,maxAbs].forEach(v=>{
-    const y=pad.t+ch/2-(v/maxAbs)*(ch/2);
-    ctx.fillText((v>=0?'+':'')+v.toFixed(1)+'%',pad.l-4,y+3);
-  });
+function initCharts(tab) {
+  if (tab==='overview') { drawOverviewChart(); }
+  if (tab==='breakpoint') { drawBpChart(); drawTmChart(); drawClassChart(); }
+  if (tab==='firms') { buildFirmCards(); drawFirmChart(); }
+  if (tab==='strategy') { drawCumplChart(); drawCarPathChart(); }
+  if (tab==='appendix') { drawAppendClassChart(); drawSharpeChart(); drawAppendSevChart(); }
 }
 
-// ─── INTERACTION CHART ───
-function drawInteractionChart() {
-  const ctx = setupCanvas('interactionChart');
-  if (!ctx) return;
-  const W=ctx._w, H=ctx._h;
-  const pad={l:56,r:16,t:16,b:36};
-  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
-
-  const groups=[
-    {label:'Expected\nRecall',neg:-0.20,pos:0.47,combined:0.0},
-    {label:'Moderate\nSurprise',neg:-0.62,pos:0.65,combined:0.0},
-    {label:'Shock\nEvent',neg:-0.62,pos:0.51,combined:0.62},
-  ];
-  const maxAbs=1.0;
-  const zeroY=pad.t+ch*(maxAbs/(maxAbs*2));
-  const groupW=cw/3, bw=groupW*0.22;
-
-  drawGrid(ctx,pad.l,pad.t,cw,ch,6);
-  ctx.strokeStyle=COLORS.border; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(pad.l,zeroY); ctx.lineTo(pad.l+cw,zeroY); ctx.stroke();
-
-  groups.forEach((g,gi) => {
-    const gx=pad.l+gi*groupW+groupW/2;
-    // Neg bar
-    const negH=(Math.abs(g.neg)/maxAbs)*(ch/2);
-    ctx.fillStyle='rgba(239,68,68,0.8)';
-    ctx.fillRect(gx-bw-2,zeroY,bw,negH);
-    // Pos bar
-    const posH=(g.pos/maxAbs)*(ch/2);
-    ctx.fillStyle='rgba(34,197,94,0.8)';
-    ctx.fillRect(gx+2,zeroY-posH,bw,posH);
-    // Combined dot if significant
-    if (g.combined > 0) {
-      ctx.fillStyle=COLORS.accent;
-      ctx.beginPath();
-      ctx.arc(gx, zeroY-(g.combined/maxAbs)*(ch/2), 6, 0, Math.PI*2);
-      ctx.fill();
-      ctx.fillStyle=COLORS.accent2; ctx.font='10px DM Mono'; ctx.textAlign='center';
-      ctx.fillText('+'+g.combined+'%', gx, zeroY-(g.combined/maxAbs)*(ch/2)-10);
+// ── Overview chart ──
+function drawOverviewChart(){
+  makeChart('overviewChart', {
+    type:'bar',
+    data:{ labels:YR.map(d=>d.y),
+      datasets:[
+        {label:'Mechanical',data:YR.map(d=>d.mech),backgroundColor:'rgba(26,92,42,0.75)',stack:'s'},
+        {label:'Technical',data:YR.map(d=>d.tech),backgroundColor:'rgba(192,57,43,0.75)',stack:'s'},
+      ]},
+    options:{...chartDefaults,
+      scales:{x:{...axisDefaults(),stacked:true,ticks:{...axisDefaults().ticks,maxRotation:45,minRotation:45}},y:{...axisDefaults(),stacked:true}},
     }
-    // Labels
-    ctx.fillStyle=COLORS.text; ctx.font='11px Inter'; ctx.textAlign='center';
-    g.label.split('\n').forEach((ln,li)=>{
-      ctx.fillText(ln, gx, pad.t+ch+16+li*14);
-    });
-    // Value labels
-    ctx.fillStyle='rgba(239,68,68,0.9)'; ctx.font='10px DM Mono';
-    ctx.fillText(g.neg+'%', gx-bw/2-2, zeroY+negH+12);
-    ctx.fillStyle='rgba(34,197,94,0.9)';
-    ctx.fillText('+'+g.pos+'%', gx+bw/2+2, zeroY-posH-5);
-  });
-
-  // Y axis
-  ctx.fillStyle=COLORS.muted; ctx.font='9px DM Mono'; ctx.textAlign='right';
-  [-1,0,1].forEach(v=>{
-    const y=pad.t+ch/2-(v/maxAbs)*(ch/2);
-    ctx.fillText((v>0?'+':'')+v+'%',pad.l-4,y+3);
-  });
-
-  // Legend
-  ctx.fillStyle='rgba(239,68,68,0.8)'; ctx.fillRect(pad.l,pad.t+2,10,8);
-  ctx.fillStyle=COLORS.muted; ctx.font='10px Inter'; ctx.textAlign='left';
-  ctx.fillText('Neg-Sensitive CAR',pad.l+13,pad.t+10);
-  ctx.fillStyle='rgba(34,197,94,0.8)'; ctx.fillRect(pad.l+160,pad.t+2,10,8);
-  ctx.fillText('Pos-Sensitive CAR',pad.l+173,pad.t+10);
-  ctx.fillStyle=COLORS.accent; ctx.beginPath(); ctx.arc(pad.l+320,pad.t+6,5,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle=COLORS.muted; ctx.fillText('Combined Signal',pad.l+328,pad.t+10);
-}
-
-// ─── CAR PATH CHART ───
-function drawCarPathChart() {
-  const ctx = setupCanvas('carPathChart');
-  if (!ctx) return;
-  const W=ctx._w, H=ctx._h;
-  const pad={l:56,r:20,t:20,b:36};
-  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
-  const days=[-1,0,1,2,3,4,5,6,7];
-  const n=days.length;
-  const xStep=cw/(n-1);
-  // Stylized paths
-  const shortPath=[0, -0.15, -0.3, -0.45, -0.55, -0.62, -0.68, -0.70, -0.72];
-  const longPath=[0, -0.3, -0.15, 0.05, 0.18, 0.28, 0.35, 0.40, 0.42];
-  const maxAbs=0.8;
-  const zeroY=pad.t+ch*(0.8/(1.6));
-
-  drawGrid(ctx,pad.l,pad.t,cw,ch,6);
-  ctx.strokeStyle=COLORS.border; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(pad.l,zeroY); ctx.lineTo(pad.l+cw,zeroY); ctx.stroke();
-
-  // Announcement line
-  const x0=pad.l;
-  ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
-  ctx.beginPath(); ctx.moveTo(x0,pad.t); ctx.lineTo(x0,pad.t+ch); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='10px Inter'; ctx.textAlign='center';
-  ctx.fillText('Announcement', x0, pad.t+12);
-
-  const drawPath = (path, color, label, isShort) => {
-    ctx.strokeStyle=color; ctx.lineWidth=2.5;
-    ctx.shadowColor=color; ctx.shadowBlur=6;
-    ctx.beginPath();
-    path.forEach((v,i) => {
-      const x=pad.l+i*xStep;
-      const y=zeroY-(v/maxAbs)*(ch/2)*1.5;
-      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-    ctx.shadowBlur=0;
-    // Endpoint dot
-    const ex=pad.l+(n-1)*xStep;
-    const ey=zeroY-(path[n-1]/maxAbs)*(ch/2)*1.5;
-    ctx.fillStyle=color; ctx.beginPath(); ctx.arc(ex,ey,5,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle=color; ctx.font='11px DM Mono'; ctx.textAlign='left';
-    ctx.fillText(label, ex+8, ey+4);
-  };
-
-  drawPath(shortPath, COLORS.red, 'SHORT −0.72%', true);
-  drawPath(longPath, COLORS.green, 'LONG +0.42%', false);
-
-  // X axis labels
-  ctx.fillStyle=COLORS.muted; ctx.font='10px DM Mono'; ctx.textAlign='center'; ctx.shadowBlur=0;
-  days.forEach((d,i)=>{
-    ctx.fillText('t'+(d>=0?'+':'')+d, pad.l+i*xStep, pad.t+ch+20);
-  });
-
-  // Y axis
-  ctx.textAlign='right'; ctx.font='9px DM Mono'; ctx.fillStyle=COLORS.muted;
-  [-maxAbs*0.5,0,maxAbs*0.5].forEach(v=>{
-    const y=zeroY-(v/maxAbs)*(ch/2)*1.5;
-    ctx.fillText((v>0?'+':'')+v.toFixed(1)+'%',pad.l-4,y+3);
   });
 }
 
-// ─── SEV TABLE ───
-function buildSevTable() {
-  const tbody=document.getElementById('sevTable');
-  if (tbody.children.length>0) return;
-  const colors=['#ef4444','#f97316','#f59e0b','#f59e0b','#eab308','#22c55e','#3b82f6','#64748b'];
-  SEV_TABLE.forEach(([tier,weight,just],i)=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`
-      <td style="padding:7px 0;border-bottom:1px solid var(--border);">
-        <span style="color:${colors[i]};font-weight:600;">${tier}</span>
-      </td>
-      <td style="text-align:right;padding:7px 0;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;color:${colors[i]};">${weight}</td>
-      <td style="text-align:right;padding:7px 0;border-bottom:1px solid var(--border);color:var(--text-muted);font-size:10px;">${just}</td>`;
-    tbody.appendChild(tr);
-  });
+// ── BP Chart ──
+function drawBpChart(){
+  makeChart('bpChart',{type:'bar',data:{labels:YR.map(d=>d.y),datasets:[{label:'Recalls per Year',data:YR.map(d=>d.n),backgroundColor:YR.map(d=>{if(parseInt(d.y)<2014)return 'rgba(42,67,104,0.7)';if(parseInt(d.y)<2021)return 'rgba(201,168,76,0.7)';return 'rgba(192,57,43,0.65)';})}]},
+    options:{...chartDefaults,scales:{x:{...axisDefaults(),ticks:{...axisDefaults().ticks,maxRotation:45}},y:{...axisDefaults()}},plugins:{...chartDefaults.plugins,legend:{display:false}}}});
 }
 
-// ─── INIT ───
-window.addEventListener('load', () => {
-  renderCharts('overview');
-});
+// ── Tech/Mech Chart ──
+function drawTmChart(){
+  const totals=YR.map(d=>d.mech+d.tech);
+  const mechPct=YR.map((d,i)=>Math.round(d.mech/totals[i]*100));
+  const techPct=YR.map((d,i)=>Math.round(d.tech/totals[i]*100));
+  makeChart('tmChart',{type:'bar',data:{labels:YR.map(d=>d.y),datasets:[
+    {label:'Mechanical %',data:mechPct,backgroundColor:'rgba(26,92,42,0.7)',stack:'s'},
+    {label:'Technical %',data:techPct,backgroundColor:'rgba(192,57,43,0.7)',stack:'s'},
+  ]},options:{...chartDefaults,scales:{x:{...axisDefaults(),stacked:true,ticks:{...axisDefaults().ticks,maxRotation:45}},y:{...axisDefaults(),stacked:true,max:100,ticks:{...axisDefaults().ticks,callback:v=>v+'%'}}}}});
+}
+
+// ── Class donut ──
+function drawClassChart(){
+  makeChart('classChart',{type:'doughnut',data:{labels:['Mechanical','Technical','Ambiguous'],datasets:[{data:[4264,1085,87],backgroundColor:['rgba(26,92,42,0.85)','rgba(192,57,43,0.85)','rgba(184,96,10,0.85)'],borderColor:'#fdf8ee',borderWidth:2}]},
+    options:{...chartDefaults,cutout:'62%',plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12,padding:8}}}}});
+}
+
+// ── Firm chart ──
+function drawFirmChart(){
+  const labels=FIRMS.map(f=>f.ticker);
+  const colors={pos:'rgba(26,92,42,0.8)',neg:'rgba(192,57,43,0.8)',neu:'rgba(154,142,120,0.6)'};
+  makeChart('firmChart',{type:'bar',data:{labels,datasets:[
+    {label:'Pre-2014',data:FIRMS.map(f=>f.pre),backgroundColor:FIRMS.map(f=>colors[f.sens]),borderWidth:0},
+    {label:'Post-2014',data:FIRMS.map(f=>f.post),backgroundColor:FIRMS.map(f=>colors[f.sens]),borderWidth:0,borderRadius:2},
+    {label:'Tech/EV Era',data:FIRMS.map(f=>f.ev??0),backgroundColor:FIRMS.map(f=>f.ev!=null?colors[f.sens]:'transparent'),borderWidth:0},
+  ]},options:{...chartDefaults,scales:{
+    x:{...axisDefaults(),grouped:true},
+    y:{...axisDefaults(),ticks:{...axisDefaults().ticks,callback:v=>(v>0?'+':'')+v.toFixed(2)+'%'}}
+  }}});
+}
+
+// ── Cumulative P&L ──
+function drawCumplChart(){
+  const years=['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+  const shortPL=[0,180000,320000,500000,750000,1000000,1350000,1700000,1950000,2100000,2200000,2270000];
+  const longPL=[0,280000,550000,900000,1350000,1900000,2400000,2850000,3200000,3400000,3550000,3660000];
+  const combined=shortPL.map((v,i)=>v+longPL[i]);
+  makeChart('cumplChart',{type:'line',data:{labels:years,datasets:[
+    {label:'SHORT P&L',data:shortPL,borderColor:'#e63946',backgroundColor:'rgba(230,57,70,0.08)',fill:true,tension:0.35,pointRadius:3},
+    {label:'LONG P&L',data:longPL,borderColor:'#1a5c2a',backgroundColor:'rgba(26,92,42,0.08)',fill:true,tension:0.35,pointRadius:3},
+    {label:'Combined',data:combined,borderColor:'#c9a84c',backgroundColor:'transparent',tension:0.35,borderWidth:2.5,pointRadius:3},
+  ]},options:{...chartDefaults,scales:{
+    x:{...axisDefaults()},
+    y:{...axisDefaults(),ticks:{...axisDefaults().ticks,callback:v=>'$'+(v/1e6).toFixed(1)+'M'}}
+  }}});
+}
+
+// ── CAR Path ──
+function drawCarPathChart(){
+  const days=['t−1','t0','t+1','t+2','t+3','t+4','t+5','t+6','t+7'];
+  const shortPath=[0,-0.12,-0.28,-0.40,-0.50,-0.58,-0.63,-0.67,-0.68];
+  const longPath=[0,-0.28,-0.12,0.08,0.22,0.35,0.48,0.60,0.75];
+  makeChart('carPathChart',{type:'line',data:{labels:days,datasets:[
+    {label:'SHORT (Shock+Neg) CAR%',data:shortPath,borderColor:'#e63946',backgroundColor:'rgba(230,57,70,0.06)',fill:true,tension:0.3,borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#e63946'},
+    {label:'LONG (Expected+Pos) CAR%',data:longPath,borderColor:'#1a5c2a',backgroundColor:'rgba(26,92,42,0.06)',fill:true,tension:0.3,borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#1a5c2a'},
+  ]},options:{...chartDefaults,scales:{
+    x:{...axisDefaults()},
+    y:{...axisDefaults(),ticks:{...axisDefaults().ticks,callback:v=>(v>=0?'+':'')+v.toFixed(2)+'%'}}
+  }}});
+}
+
+// ── Appendix: Classification breakdown ──
+function drawAppendClassChart(){
+  makeChart('appendClassChart',{type:'doughnut',data:{labels:['Mechanical (78.4%)','Technical (19.9%)','Ambiguous (1.6%)'],datasets:[{data:[4264,1085,87],backgroundColor:['rgba(26,92,42,0.85)','rgba(192,57,43,0.85)','rgba(184,96,10,0.75)'],borderColor:'#fff',borderWidth:2}]},
+    options:{...chartDefaults,cutout:'55%',plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10,padding:6}}}}});
+}
+
+// ── Sharpe bar chart ──
+function drawSharpeChart(){
+  makeChart('sharpeChart',{type:'bar',data:{labels:['Strategy SHORT','Strategy LONG','Strategy Combined','S&P 500'],datasets:[{label:'Sharpe Ratio',data:[0.78,0.81,0.839,0.723],backgroundColor:['rgba(192,57,43,0.75)','rgba(26,92,42,0.75)','rgba(201,168,76,0.85)','rgba(42,67,104,0.6)'],borderRadius:4,borderWidth:0}]},
+    options:{...chartDefaults,indexAxis:'y',scales:{x:{...axisDefaults(),min:0.5,max:1.0,ticks:{...axisDefaults().ticks,callback:v=>v.toFixed(2)}},y:{...axisDefaults()}},plugins:{...chartDefaults.plugins,legend:{display:false}}}});
+}
+
+// ── Appendix: Severity distribution ──
+function drawAppendSevChart(){
+  makeChart('appendSevChart',{type:'bar',data:{labels:['Low (0.0–3.0)','Moderate (3.0–5.9)','High (6.0–10.0)'],datasets:[{label:'Recall Count',data:[4017,541,878],backgroundColor:['rgba(26,92,42,0.7)','rgba(184,96,10,0.75)','rgba(192,57,43,0.8)'],borderRadius:4,borderWidth:0}]},
+    options:{...chartDefaults,scales:{x:{...axisDefaults()},y:{...axisDefaults()}},plugins:{...chartDefaults.plugins,legend:{display:false}}}});
+}
+
+// ── Init on load ──
+window.addEventListener('load', () => { initCharts('overview'); });
 window.addEventListener('resize', () => {
-  rendered.clear();
-  const activeTab = document.querySelector('.tab.active');
-  if (activeTab) {
-    const tabId = activeTab.getAttribute('onclick').match(/'(\w+)'/)[1];
-    setTimeout(() => renderCharts(tabId), 100);
-  }
+  const active = document.querySelector('.nav-tab.active');
+  if (active) setTimeout(() => initCharts(active.dataset.tab), 100);
 });
 </script>
 </body>
