@@ -370,7 +370,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);li
       <div class="hero-stat"><div class="num">54.2%</div><div class="lbl">Combined Win Rate</div></div>
     </div>
     <div class="hero-team">
-      <div class="team-block"><div class="label">Team</div><div class="name">Ryan Brid · Augusta Domingo<br>Dylan Hahami</div></div>
+      <div class="team-block"><div class="label">Team</div><div class="name">Ryan Brid · Augusta Domingo · Dylan Hahami</div></div>
       <div class="team-block"><div class="label">Faculty Advisor</div><div class="name">Michael D. Herley, D.B.A.</div></div>
       <div class="team-block"><div class="label">Affiliation</div><div class="name">Peter J. Tobin College of Business<br>St. John's University</div></div>
     </div>
@@ -397,6 +397,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);li
     <button class="nav-tab" data-tab="surprise"><span class="num">04</span>Surprise Metric</button>
     <button class="nav-tab" data-tab="strategy"><span class="num">05</span>Strategy &amp; Performance</button>
     <button class="nav-tab" data-tab="appendix"><span class="num">A</span>Appendix</button>
+    <button class="nav-tab" data-tab="sources"><span class="num">S</span>Sources</button>
   </div>
 </nav>
 
@@ -1088,6 +1089,142 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);li
   </div>
 </section>
 
+<!-- ════════════════ SOURCES ════════════════ -->
+<section class="section" id="sources">
+  <div class="sec-header">
+    <div class="sec-num" style="color:var(--text-subtle);">S</div>
+    <div class="sec-meta">
+      <div class="sec-eyebrow">Academic Literature</div>
+      <h2 class="sec-title">Sources &amp; References</h2>
+      <p class="sec-desc">The three peer-reviewed studies below directly inform the methodological and theoretical foundations of this research — covering event study design in finance, product recall spillover effects on competitors, and the real-market impact of recall information on secondary vehicle markets.</p>
+    </div>
+  </div>
+
+  <!-- SOURCE 1 -->
+  <div class="card" style="margin-bottom:24px;overflow:hidden;">
+    <div style="background:var(--navy-800);padding:24px 32px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+        <div>
+          <div class="gold-tag" style="margin-bottom:10px;">Event Study Methodology</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.3;max-width:760px;">Event Studies in International Finance Research</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:8px;">El Ghoul, S., Guedhami, O., Mansi, S. A., &amp; Sy, O. (2023)</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);margin-top:6px;letter-spacing:0.06em;font-style:italic;">Journal of International Business Studies, 54, 344–364. https://doi.org/10.1057/s41267-022-00534-6</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold-light);">2023</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;">JIBS · Peer-Reviewed</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-pad">
+      <div class="grid-2" style="gap:32px;align-items:start;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:10px;">Abstract</div>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.75;">This paper surveys event study methodology in international finance, emphasizing the challenges of cross-country research. The authors review how to define events, select estimation and event windows, compute abnormal returns, and make statistical inferences — covering the full spectrum from the mean-adjusted model to multi-factor Fama-French and q-factor approaches. They also extend the methodology to international bond markets, a comparatively understudied asset class. Of 699 event studies surveyed across top finance journals, fewer than 12% were cross-country, underscoring the novelty of applying these methods across market regimes.</p>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:12px;">Relevance to This Study</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Market Model Foundation:</strong> We adopt the classic market model (Eq. 3 in El Ghoul et al.) — estimating α and β per firm over an estimation window [−120, −10], then computing ARᵢₜ = rᵢₜ − (αᵢ + βᵢ·rₘₜ) — consistent with their recommendation for short-horizon event studies.</div>
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Structural Break Approach:</strong> The paper supports examining cross-regime differences in event study outcomes. Our Bai-Perron breakpoint analysis identifying 2014 and 2021 regime shifts aligns with their recommendation to examine institutional and regulatory determinants of cross-period differences in price reactions.</div>
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Semi-Strong Efficiency Benchmark:</strong> The authors anchor event study logic in Fama's (1991) semi-strong efficiency hypothesis. Our finding of delayed underreaction in the [−1,+7] window is framed as evidence of delayed price adjustment — the tradeable inefficiency our strategy exploits.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px 18px;background:var(--navy-800);border-radius:6px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);">Key Authors</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.75);">Sadok El Ghoul — University of Alberta &nbsp;·&nbsp; Omrane Guedhami — University of South Carolina &nbsp;·&nbsp; Sattar A. Mansi — Virginia Tech &nbsp;·&nbsp; Oumar Sy — Dalhousie University</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOURCE 2 -->
+  <div class="card" style="margin-bottom:24px;overflow:hidden;">
+    <div style="background:var(--navy-800);padding:24px 32px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+        <div>
+          <div class="gold-tag" style="margin-bottom:10px;">Recall Spillover Effects</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.3;max-width:760px;">Examining the Effect of a Firm's Product Recall on Financial Values of Its Competitors</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:8px;">Fang, X., Wang, X., Shao, Y., &amp; Banerjee, P. (2024)</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);margin-top:6px;letter-spacing:0.06em;font-style:italic;">Journal of Business Research, 176, 114586. https://doi.org/10.1016/j.jbusres.2024.114586</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold-light);">2024</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;">JBR · Peer-Reviewed</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-pad">
+      <div class="grid-2" style="gap:32px;align-items:start;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:10px;">Abstract</div>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.75;">Using CPSC product recalls from 1996 to 2019 across a wide range of consumer industries, this paper applies event study methodology to assess how recalls affect the short-term abnormal returns of competitor firms on the "America's Most Admired Companies" list. Product recalls generate an overall negative spillover effect on competitors (CAR[−5,+5] = −0.24%, p &lt; 0.10). Crucially, hazard severity and recall strategy (proactive vs. passive) significantly moderate this effect: severe hazards produce a positive competitive effect for rivals (+1.03%), while proactive recalls trigger stronger negative spillovers (−1.02%). The study draws on expectance violation theory, accessibility-diagnosticity theory, and associative network theory to explain these patterns.</p>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:12px;">Relevance to This Study</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Severity as Signal:</strong> Fang et al. establish that recall hazard severity is a statistically significant predictor of market reaction — directly supporting our severity scoring model as the foundation for the Surprise Metric. Their CAR[0,+1] evidence for severe recalls validates our surprise tercile approach.</div>
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Proactive vs. Passive Recall:</strong> Their finding that proactive recalls generate stronger negative market reactions than passive ones is consistent with our "shock event" category — unexpected recalls that surprise the market produce larger abnormal returns, forming the basis for our SHORT signal.</div>
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Contagion vs. Competitive Effect:</strong> Their framework of negative spillover vs. competitive effect maps directly onto our firm sensitivity model — negative-sensitive firms experience the contagion effect; positive-sensitive firms (e.g., Ford, Tesla) capture the competitive/proactive-management interpretation.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px 18px;background:var(--navy-800);border-radius:6px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);">Key Authors</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.75);">Xiang Fang — Oklahoma State University &nbsp;·&nbsp; Xiaoyu Wang — Shanghai University of Finance &amp; Economics &nbsp;·&nbsp; Yingying Shao — Towson University &nbsp;·&nbsp; Pramit Banerjee — Missouri Western State University</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOURCE 3 -->
+  <div class="card" style="margin-bottom:24px;overflow:hidden;">
+    <div style="background:var(--navy-800);padding:24px 32px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+        <div>
+          <div class="gold-tag" style="margin-bottom:10px;">Market Information Effects</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.3;max-width:760px;">The Effect of Information on Market Activity: Evidence from Vehicle Recalls</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:8px;">van den Bijgaart, I., &amp; Cerruti, D. (2024)</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);margin-top:6px;letter-spacing:0.06em;font-style:italic;">Review of Economics and Statistics, 106(1), 230–245. https://doi.org/10.1162/rest_a_01164</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold-light);">2024</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;">REStat · Peer-Reviewed</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-pad">
+      <div class="grid-2" style="gap:32px;align-items:start;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:10px;">Abstract</div>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.75;">Using a rich panel of Dutch vehicle registration data covering ~9 million cars, this study exploits quasi-experimental variation in recall occurrence within groups of nearly identical vehicles (defined by EU version classification) to identify the causal effect of recall announcements on used-car market activity. The paper finds strong heterogeneity across market segments: resales increased for lower-priced vehicles with defects (sorting effect dominates) but decreased for higher-priced, reliable vehicles (adverse selection effect dominates). Prices were largely unaffected. The results demonstrate that recall information arrival is not uniformly processed by market participants, with implications for how different firm types respond to recall news.</p>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:12px;">Relevance to This Study</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Heterogeneous Market Reactions:</strong> Van den Bijgaart &amp; Cerruti establish that recall effects differ substantially based on vehicle/brand quality tier — a finding that directly supports our firm sensitivity model. Premium brands (BMW, Mercedes) face adverse selection amplification; value-oriented firms face different dynamics.</div>
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Delayed Information Processing:</strong> Their finding that recall effects unfold over 6+ months in the secondary vehicle market echoes our observation of delayed underreaction in the stock market [−1,+7] window. In both settings, markets do not immediately price recall information — creating exploitable windows.</div>
+            <div style="padding:12px 14px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:var(--navy-700);line-height:1.65;"><strong>Recall as Information Shock:</strong> The paper frames recalls as information shocks that reveal previously unknown quality signals. This theoretical grounding supports our Surprise Metric design — high-surprise recalls represent larger information shocks that the market has not yet priced in, generating the largest post-announcement abnormal returns.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px 18px;background:var(--navy-800);border-radius:6px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);">Key Authors</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.75);">Inge van den Bijgaart — Utrecht University &amp; University of Gothenburg &nbsp;·&nbsp; Davide Cerruti — ETH Zürich</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Citation summary -->
+  <div style="background:var(--navy-800);border-radius:6px;padding:28px 32px;border:1px solid rgba(201,168,76,0.2);">
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold-light);margin-bottom:16px;">Full Citations (APA Format)</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:12px;color:rgba(255,255,255,0.72);line-height:1.8;padding-left:20px;border-left:2px solid var(--gold);">El Ghoul, S., Guedhami, O., Mansi, S. A., &amp; Sy, O. (2023). Event studies in international finance research. <em style="color:var(--gold-light);">Journal of International Business Studies, 54</em>, 344–364. https://doi.org/10.1057/s41267-022-00534-6</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.72);line-height:1.8;padding-left:20px;border-left:2px solid var(--gold);">Fang, X., Wang, X., Shao, Y., &amp; Banerjee, P. (2024). Examining the effect of a firm's product recall on financial values of its competitors. <em style="color:var(--gold-light);">Journal of Business Research, 176</em>, 114586. https://doi.org/10.1016/j.jbusres.2024.114586</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.72);line-height:1.8;padding-left:20px;border-left:2px solid var(--gold);">van den Bijgaart, I., &amp; Cerruti, D. (2024). The effect of information on market activity: Evidence from vehicle recalls. <em style="color:var(--gold-light);">Review of Economics and Statistics, 106</em>(1), 230–245. https://doi.org/10.1162/rest_a_01164</div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer class="footer">
@@ -1103,7 +1240,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);li
       </div>
       <div class="footer-block">
         <div class="label">Team</div>
-        <p>Ryan Brid<br>Vincent D'Esposito<br>Augusta Domingo<br>Dylan Hahami<br><br>Advisor: Michael D. Herley, D.B.A.</p>
+        <p>Ryan Brid<br>Augusta Domingo<br>Dylan Hahami<br><br>Advisor: Michael D. Herley, D.B.A.</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1222,6 +1359,7 @@ function initCharts(tab) {
   if (tab==='firms') { buildFirmCards(); drawFirmChart(); }
   if (tab==='strategy') { drawCumplChart(); drawCarPathChart(); }
   if (tab==='appendix') { drawAppendClassChart(); drawSharpeChart(); drawAppendSevChart(); }
+  // sources tab: no charts needed
 }
 
 // ── Overview chart ──
